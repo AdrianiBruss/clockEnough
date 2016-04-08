@@ -1,20 +1,12 @@
 <ion-view view-title="Account" id="account">
+    <ion-nav-buttons side="primary">
+        <button class="button icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="secondary">
+        <button class="button icon ion-person-add" ng-click="goTo('tab.signUp')"></button>
+    </ion-nav-buttons>
     <ion-content>
-        <ion-header-bar align-title="left" class="bar-positive">
-          <div class="buttons">
-            <button class="button" ng-click="doSomething()">Left Button</button>
-          </div>
-          <h1 class="title">Title!</h1>
-          <div class="buttons">
-            <button class="button">Right Button</button>
-          </div>
-        </ion-header-bar>
-        <!-- <div class="bar bar-header">
-            <button class="button button-icon icon ion-navicon"></button>
-            <div class="h1 title">Header Buttons</div>
-            <button class="button button-clear button-positive">Edit</button>
-        </div> -->
-        <div class="content has-header" ng-if="0==1">
+        <div class="content has-header">
           <div class="list animate-fade-slide-in-right">
               <a href="#/app/profile" class="item item-avatar item-icon-right">
                   <img src="http://static1.puretrend.com/articles/6/81/06/6/@/932535-melanie-bernier-300x276-2.jpg">
@@ -47,21 +39,6 @@
                   <i class="icon ion-chatbubble muted"></i>
               </a>
           </div>
-        </div>
-
-        <div class="list">
-            <label class="item item-input">
-                <input type="text" placeholder="Prénom">
-            </label>
-            <label class="item item-input">
-                <input type="text" placeholder="Nom">
-            </label>
-            <div class="picture" ng-click="capturePicture()">
-                <img id="capturedImage" src="http://static1.puretrend.com/articles/6/81/06/6/@/932535-melanie-bernier-300x276-2.jpg" alt="" />
-            </div>
-            <button class="button button-block button-stable">
-                Sauvegarder
-            </button>
         </div>
     </ion-content>
 </ion-view>

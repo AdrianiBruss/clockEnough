@@ -78,6 +78,15 @@ angular.module('clockEnough', ['ionic', 'ngCordova','ionic-material'])
         controller: 'AccountCtrl'
       }
     }
+  })
+  .state('tab.signUp', {
+    url: '/account/signUp',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/signUp.html',
+        controller: 'SignUpCtrl'
+      }
+    }
   });
 
   // if none of the above states are matched, use this as the fallback

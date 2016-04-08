@@ -1,6 +1,10 @@
 angular.module('clockEnough')
 
-.controller('AccountCtrl', function($scope, ionicMaterialInk, ionicMaterialMotion, $cordovaCamera) {
+.controller('AccountCtrl', function($scope, ionicMaterialInk, ionicMaterialMotion, $cordovaCamera, $state) {
+
+    $scope.goTo = function ( path ) {
+        $state.go(path);
+    };
 
 	// ionic materialize animations
     ionicMaterialMotion.fadeSlideInRight();
@@ -27,4 +31,8 @@ angular.module('clockEnough')
             console.error(err)
         });
     }
+})
+
+.controller('SignUpCtrl', function(){
+
 })

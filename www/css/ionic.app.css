@@ -9721,11 +9721,11 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
-#account .picture {
+#signup .picture {
   display: block;
   width: 200px;
   height: 200px;
   background: #444;
   margin: 30px auto; }
-  #account .picture img {
+  #signup .picture img {
     width: 100%; }
