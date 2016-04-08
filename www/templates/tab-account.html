@@ -1,38 +1,67 @@
-<ion-view view-title="Account">
-  <ion-content>
-      <div class="content has-header">
+<ion-view view-title="Account" id="account">
+    <ion-content>
+        <ion-header-bar align-title="left" class="bar-positive">
+          <div class="buttons">
+            <button class="button" ng-click="doSomething()">Left Button</button>
+          </div>
+          <h1 class="title">Title!</h1>
+          <div class="buttons">
+            <button class="button">Right Button</button>
+          </div>
+        </ion-header-bar>
+        <!-- <div class="bar bar-header">
+            <button class="button button-icon icon ion-navicon"></button>
+            <div class="h1 title">Header Buttons</div>
+            <button class="button button-clear button-positive">Edit</button>
+        </div> -->
+        <div class="content has-header" ng-if="0==1">
           <div class="list animate-fade-slide-in-right">
               <a href="#/app/profile" class="item item-avatar item-icon-right">
-                  <img src="img/jon-snow.jpg">
+                  <img src="http://static1.puretrend.com/articles/6/81/06/6/@/932535-melanie-bernier-300x276-2.jpg">
                   <h2>Jon Snow</h2>
                   <p>Da illest illegitimate</p>
                   <i class="icon ion-chatbubble muted"></i>
               </a>
               <a href="#/app/profile" class="item item-avatar item-icon-right">
-                  <img src="img/daenerys.jpg">
+                  <img src="http://static1.puretrend.com/articles/6/81/06/6/@/932535-melanie-bernier-300x276-2.jpg">
                   <h2>Daenerys Targaryen</h2>
                   <p>Dragon mommy</p>
                   <i class="icon ion-chatbubble muted"></i>
               </a>
               <a href="#/app/profile" class="item item-avatar item-icon-right">
-                  <img src="img/arya.jpg">
+                  <img src="http://static1.puretrend.com/articles/6/81/06/6/@/932535-melanie-bernier-300x276-2.jpg">
                   <h2>Arya Stark</h2>
                   <p>Is Chuck Norris' fear</p>
                   <i class="icon ion-chatbubble muted"></i>
               </a>
               <a href="#/app/profile" class="item item-avatar item-icon-right">
-                  <img src="img/sansa.jpg">
+                  <img src="http://static1.puretrend.com/articles/6/81/06/6/@/932535-melanie-bernier-300x276-2.jpg">
                   <h2>Sansa Stark</h2>
                   <p>&amp; Joffrey <strike>sitting</strike> sat in a tree</p>
                   <i class="icon ion-chatbubble muted"></i>
               </a>
               <a href="#/app/profile" class="item item-avatar item-icon-right">
-                  <img src="img/tyrion.jpg">
+                  <img src="http://static1.puretrend.com/articles/6/81/06/6/@/932535-melanie-bernier-300x276-2.jpg">
                   <h2>Tyrion Lannister</h2>
                   <p>B.A.M.F. imp</p>
                   <i class="icon ion-chatbubble muted"></i>
               </a>
           </div>
-      </div>
-  </ion-content>
+        </div>
+
+        <div class="list">
+            <label class="item item-input">
+                <input type="text" placeholder="Prénom">
+            </label>
+            <label class="item item-input">
+                <input type="text" placeholder="Nom">
+            </label>
+            <div class="picture" ng-click="capturePicture()">
+                <img id="capturedImage" src="http://static1.puretrend.com/articles/6/81/06/6/@/932535-melanie-bernier-300x276-2.jpg" alt="" />
+            </div>
+            <button class="button button-block button-stable">
+                Sauvegarder
+            </button>
+        </div>
+    </ion-content>
 </ion-view>
