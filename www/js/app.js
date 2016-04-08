@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services','ionic-material'])
+angular.module('clockEnough', ['ionic', 'ngCordova','ionic-material'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
