@@ -9721,11 +9721,30 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
-#signup .picture {
+.page-account .title {
+  border-top: 1px solid #444;
+  padding-top: 20px;
+  text-align: center; }
+
+.page-account .logo {
+  display: inline-block;
+  vertical-align: middle;
+  width: 100px;
+  height: 100px;
+  background: #444;
+  color: #f8f8f8;
+  text-align: center;
+  margin: 20px; }
+
+.page-account h1.app-name {
+  display: inline-block;
+  vertical-align: middle; }
+
+.page-account#signup .picture {
   display: block;
   width: 200px;
   height: 200px;
   background: #444;
   margin: 30px auto; }
-  #signup .picture img {
+  .page-account#signup .picture img {
     width: 100%; }

@@ -6,10 +6,34 @@ angular.module('clockEnough')
         $state.go(path);
     };
 
-	// ionic materialize animations
-    ionicMaterialMotion.fadeSlideInRight();
-    ionicMaterialInk.displayEffect();
+    $scope.events = [
+        {
+            id: 0,
+            name: 'Event 1',
+            address: 'Avenue des champs Elysées',
+            date: 'Sam. 32 Fev, 21:00',
+        },{
+            id: 1,
+            name: 'Event 2',
+            address: 'Limoge Susu',
+            date: 'Sam. 32 Fev, 21:00',
+        },{
+            id: 2,
+            name: 'Event 3',
+            address: 'Boulbi 92 izi',
+            date: 'Sam. 32 Fev, 21:00',
+        }
+    ];
 
+    setTimeout(function(){
+        // ionic materialize animations
+        ionicMaterialMotion.fadeSlideInRight();
+        ionicMaterialInk.displayEffect();
+    },0)
+
+})
+
+.controller('SignUpCtrl', function(){
     $scope.capturePicture = function() {
         var options = {
             quality: 50,
@@ -31,8 +55,4 @@ angular.module('clockEnough')
             console.error(err)
         });
     }
-})
-
-.controller('SignUpCtrl', function(){
-
 })
