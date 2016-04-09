@@ -37,9 +37,16 @@
 			width: 200px;
 			height: 200px;
 
-			background: $dark;
+			border: 1px solid $dark;
 
 			margin: 30px auto;
+
+			i {
+				text-align: center;
+				display: block;
+				line-height: 150px;
+				font-size: 40px;
+			}
 
 			img {
 			    width: 100%;

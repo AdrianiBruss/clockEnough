@@ -1,6 +1,6 @@
 angular.module('clockEnough')
 
-.controller('AccountCtrl', function($scope, ionicMaterialInk, ionicMaterialMotion, $cordovaCamera, $state) {
+.controller('AccountCtrl', function($scope, ionicMaterialInk, ionicMaterialMotion, $state) {
 
     $scope.goTo = function ( path ) {
         $state.go(path);
@@ -33,16 +33,23 @@ angular.module('clockEnough')
 
 })
 
-.controller('SignUpCtrl', function(){
+.controller('SignUpCtrl', function($scope, $cordovaCamera){
+
+    $scope.icon = true;
+    $scope.account = {
+        firstname : "",
+        lastname : "",
+        picture: ""
+    }
     $scope.capturePicture = function() {
         var options = {
-            quality: 50,
+            quality: 100,
             destinationType: Camera.DestinationType.DATA_URL,
             sourceType: Camera.PictureSourceType.CAMERA,
-            allowEdit: true,
+            allowEdit: false,
             encodingType: Camera.EncodingType.JPEG,
-            targetWidth: 100,
-            targetHeight: 100,
+            targetWidth: 200,
+            targetHeight: 200,
             popoverOptions: CameraPopoverOptions,
             saveToPhotoAlbum: false,
             correctOrientation:true
@@ -50,9 +57,16 @@ angular.module('clockEnough')
 
         $cordovaCamera.getPicture(options).then(function(imageData) {
             var image = document.getElementById('capturedImage');
-            image.src = "data:image/jpeg;base64," + imageData;
+            var path = "data:image/jpeg;base64," + imageData
+            image.src = path;
+            $scope.icon = false;
+            $scope.account.picture = path;
         }, function(err) {
             console.error(err)
         });
+    };
+
+    $scope.saveAccount = function(){
+        $scope.infos = $scope.account;
     }
 })
