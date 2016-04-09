@@ -9721,12 +9721,16 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
-.page-account .title {
+h1.h1.app-name {
+  display: inline-block;
+  vertical-align: middle; }
+
+h2.h2.title {
   border-top: 1px solid #444;
   padding-top: 20px;
   text-align: center; }
 
-.page-account .logo {
+.logo {
   display: inline-block;
   vertical-align: middle;
   width: 100px;
@@ -9735,10 +9739,6 @@ a.button {
   color: #f8f8f8;
   text-align: center;
   margin: 20px; }
-
-.page-account h1.app-name {
-  display: inline-block;
-  vertical-align: middle; }
 
 .page-account#signup .picture {
   display: block;
@@ -9753,3 +9753,7 @@ a.button {
     font-size: 40px; }
   .page-account#signup .picture img {
     width: 100%; }
+
+#page-create-event .people-overflow {
+  max-height: 150px;
+  overflow: scroll; }

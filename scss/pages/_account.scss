@@ -1,33 +1,5 @@
 .page-account {
 
-	.title {
-		border-top: 1px solid $dark;
-
-		padding-top: 20px;
-
-		text-align: center;
-	}
-
-	.logo {
-		display: inline-block;
-		vertical-align: middle;
-
-		width: 100px;
-		height: 100px;
-
-		background: $dark;
-		color: $stable;
-
-		text-align: center;
-
-		margin: 20px;
-	}
-
-	h1.app-name {
-		display: inline-block;
-		vertical-align: middle;
-	}
-
 	&#signup {
 
 		.picture {
