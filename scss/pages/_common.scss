@@ -25,3 +25,26 @@ h2.h2.title {
 
 	margin: 20px;
 }
+.picture {
+
+	display: block;
+
+	width: 200px;
+	height: 200px;
+
+	border: 1px solid $dark;
+
+	margin: 30px auto;
+
+	i {
+		text-align: center;
+		display: block;
+		line-height: 150px;
+		font-size: 40px;
+	}
+
+	img {
+		width: 100%;
+	}
+
+}
