@@ -22,7 +22,7 @@
         </label>
         <div class="item item-input-inset">
             <label class="item-input-wrapper">
-                <input type="text" placeholder="Ajouter un status">
+                <input type="text" placeholder="Ajouter un status" ng-model="event.statusInput">
             </label>
             <button class="button button-small" ng-click="addStatus()">
                 <i class="icon ion-plus"></i>
@@ -36,8 +36,8 @@
                 <ion-list>
                     <ion-item ng-repeat="p in people" class="item item-button-right">
                         {{p.name}} {{p.lastname}}
-                        <button class="button button-stable" ng-click="addPeople()">
-                            <i class="icon ion-plus"></i>
+                        <button class="button button-stable" ng-click="addPeople($index)">
+                            <i class="icon" ng-class="{'ion-minus': p.added, 'ion-plus': !p.added}"></i>
                         </button>
                     </ion-item>
                 </ion-list>

@@ -1,13 +1,16 @@
 angular.module('clockEnough')
 
 .controller('OrganizeCtrl', function($scope) {
-	console.log('UCLA');
 
 	$scope.event = {
 		name: "UCLA",
 		date: "everyday",
 		hours: "00:00",
 		place: "LA, California, USA",
+		statusInput: "",
+		status: [],
+		people: []
+
 	}
 
 	$scope.people = [
@@ -33,5 +36,20 @@ angular.module('clockEnough')
             lastname: 'Paak',
         }
     ];
+
+	$scope.addPeople = function(index){
+		$scope.event.people.push($scope.people[index]);
+		$scope.people[index].added = true;
+	}
+
+	$scope.addStatus = function(){
+		$scope.event.status.push($scope.event.statusInput);
+		$scope.event.statusInput = "";
+	}
+
+	$scope.saveEvent = function(){
+		console.log('event saved');
+		console.log($scope.event);
+	}
 
 });
