@@ -9,13 +9,13 @@ angular.module('clockEnough')
 	FaceAPI.getAllEvents();
 	$rootScope.$on('allEvents', function(event,data){
 		$scope.events = data.group;
-    });
 
-	setTimeout(function(){
-		// ionic materialize animations
-		ionicMaterialMotion.fadeSlideInRight();
-		ionicMaterialInk.displayEffect();
-	},0)
+		setTimeout(function(){
+			// ionic materialize animations
+			ionicMaterialMotion.fadeSlideInRight();
+			ionicMaterialInk.displayEffect();
+		},0)
+    });
 })
 
 .controller('EventCheckCtrl', function($scope, $state, $stateParams) {

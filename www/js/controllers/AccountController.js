@@ -24,20 +24,20 @@ angular.module('clockEnough')
     //         date: 'Sam. 32 Fev, 21:00',
     //     }
     // ];
-    
+
     FaceAPI.getAllEvents();
 
     $rootScope.$on('allEvents', function(event,data){
-        $scope.events = data;
+        $scope.events = data.group;
         console.log(data);
+
+        setTimeout(function(){
+            // ionic materialize animations
+            ionicMaterialMotion.fadeSlideInRight();
+            ionicMaterialInk.displayEffect();
+        },0)
+
     });
-
-
-    setTimeout(function(){
-        // ionic materialize animations
-        ionicMaterialMotion.fadeSlideInRight();
-        ionicMaterialInk.displayEffect();
-    },0)
 
 }])
 
