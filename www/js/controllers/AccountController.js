@@ -1,6 +1,6 @@
 angular.module('clockEnough')
 
-.controller('AccountCtrl', function($scope, ionicMaterialInk, ionicMaterialMotion, $state) {
+.controller('AccountCtrl', ['$scope', 'ionicMaterialInk', 'ionicMaterialMotion', '$state', 'FaceAPI','$rootScope', function($scope, ionicMaterialInk, ionicMaterialMotion, $state, FaceAPI, $rootScope) {
 
     $scope.goTo = function ( path ) {
         $state.go(path);
@@ -24,6 +24,14 @@ angular.module('clockEnough')
             date: 'Sam. 32 Fev, 21:00',
         }
     ];
+    
+    // FaceAPI.getAllEvents();
+
+    // $rootScope.$on('allEvents', function(event,data){
+    //     $scope.events = data;
+    //     console.log(data);
+    // });
+
 
     setTimeout(function(){
         // ionic materialize animations
@@ -31,9 +39,9 @@ angular.module('clockEnough')
         ionicMaterialInk.displayEffect();
     },0)
 
-})
+}])
 
-.controller('SignUpCtrl', function($scope, $cordovaCamera){
+.controller('SignUpCtrl', ['$scope', '$cordovaCamera', function($scope, $cordovaCamera){
 
     $scope.icon = true;
     $scope.account = {
@@ -69,4 +77,4 @@ angular.module('clockEnough')
     $scope.saveAccount = function(){
         $scope.infos = $scope.account;
     }
-})
+}])
