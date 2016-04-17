@@ -24,6 +24,9 @@ angular.module('clockEnough', ['ionic', 'ngCordova','ionic-material'])
   });
 })
 
+.constant('API_KEY','1b24902b29237be03297804d43da768d')
+.constant('API_SECRET','5zc8iBY4HNu5sSdOvBxYIEdtWE-Xafim')
+
 .config(function($stateProvider, $urlRouterProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
