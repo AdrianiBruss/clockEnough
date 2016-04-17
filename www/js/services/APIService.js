@@ -52,7 +52,7 @@ angular.module('clockEnough')
       method: method,
       url: url
     }).then(function successCallback(response) {
-      $rootScope.$broadcast(event,response.data);
+      $rootScope.$broadcast(event, response.data);
     }, function errorCallback(response) {
         return response;
     });
