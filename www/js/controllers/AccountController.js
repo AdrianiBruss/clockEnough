@@ -76,5 +76,6 @@ angular.module('clockEnough')
 
     $scope.saveAccount = function(){
         $scope.infos = $scope.account;
+        console.log($scope.infos)
     }
 }])
