@@ -41,7 +41,7 @@ angular.module('clockEnough')
 
 }])
 
-.controller('SignUpCtrl', ['$scope', '$cordovaCamera', function($scope, $cordovaCamera){
+.controller('SignUpCtrl', ['$scope', '$cordovaCamera', 'FaceAPI', '$rootScope', function($scope, $cordovaCamera,FaceAPI,$rootScope){
 
     $scope.icon = true;
     $scope.account = {
@@ -76,6 +76,26 @@ angular.module('clockEnough')
 
     $scope.saveAccount = function(){
         $scope.infos = $scope.account;
-        console.log($scope.infos)
+        if($scope.infos.firstname!== '' && $scope.infos.lastname!== '')
+        {
+            // if( $scope.infos.firstname.indexOf('\'') != -1){
+            //     $scope.infos.firstname.replace(/'/g,"-");
+            // }
+
+            // if( $scope.infos.lastname.indexOf('\'') != -1){
+            //     $scope.infos.lastname.replace(/'/g,"-");
+            // }
+
+            FaceAPI.createUser($scope.infos.firstname,$scope.infos.lastname);
+        }
     }
+
+    $scope.$on('createUser', function(event,data){
+        $scope.user.id = data.person_id;
+        FaceAPI.detectFace($scope.account.picture);
+    });
+
+    $scope.$on('detectFace', function(event,data){
+        FaceAPI.detectFace($scope.user.id,data.face_id);
+    });
 }])

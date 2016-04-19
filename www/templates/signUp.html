@@ -9,10 +9,10 @@
       <div class="list">
           <h2 class="h2 title">S'enregistrer</h2>
           <label class="item item-input">
-              <input type="text" placeholder="Prénom" ng-model="account.firstname">
+              <input type="text" placeholder="Prénom" ng-model="account.firstname" required>
           </label>
           <label class="item item-input">
-              <input type="text" placeholder="Nom" ng-model="account.lastname">
+              <input type="text" placeholder="Nom" ng-model="account.lastname" required>
           </label>
           <div class="picture" ng-click="capturePicture()">
               <img id="capturedImage" src="" alt="" />
