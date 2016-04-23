@@ -9754,6 +9754,16 @@ h2.h2.title {
   .picture img {
     width: 100%; }
 
+input[type="text"] {
+  border-bottom: 1px solid #444; }
+  input[type="text"].ng-valid-parse {
+    color: #444;
+    border-color: #444; }
+
+.error input[type="text"] {
+  color: #ef473a;
+  border-color: #ef473a; }
+
 #page-create-event .people-overflow {
   max-height: 150px;
   overflow: scroll; }

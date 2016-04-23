@@ -8,7 +8,7 @@
     </div>
     <div class="list">
         <h2 class="h2 title">Organiser un événement</h2>
-        <label class="item item-input">
+        <label class="item item-input" ng-class='{error: error}'>
             <input type="text" placeholder="Nom de l'événement" ng-model="event.name">
         </label>
         <label class="item item-input">
@@ -28,6 +28,11 @@
                 <i class="icon ion-plus"></i>
             </button>
         </div>
+        <ion-list>
+            <ion-item ng-repeat="status in event.status">
+                {{status}}
+            </ion-item>
+        </ion-list>
         <div class="item item-divider">
             Ajouter des personnes
         </div>
@@ -36,7 +41,7 @@
                 <ion-list>
                     <ion-item ng-repeat="p in people" class="item item-button-right">
                         {{p.person_name}}
-                        <button class="button button-stable" ng-click="addPeople($index)">
+                        <button class="button button-stable" ng-click="managePeople($index)">
                             <i class="icon" ng-class="{'ion-minus': p.added, 'ion-plus': !p.added}"></i>
                         </button>
                     </ion-item>

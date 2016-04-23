@@ -48,3 +48,18 @@ h2.h2.title {
 	}
 
 }
+input[type="text"] {
+	border-bottom: 1px solid $dark;
+	&.ng-valid-parse {
+
+		color: $dark;
+		border-color: $dark;
+	}
+}
+
+.error {
+	input[type="text"] {
+		color: $assertive;
+		border-color: $assertive;
+	}
+}

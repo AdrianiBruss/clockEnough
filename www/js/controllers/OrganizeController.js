@@ -8,6 +8,9 @@ angular.module('clockEnough')
 		$scope.people = data.person;
     });
 
+	$scope.error = false;
+
+	$scope.peopleList = [];
 	$scope.event = {
 		name: "",
 		date: "",
@@ -19,9 +22,20 @@ angular.module('clockEnough')
 
 	}
 
-	$scope.addPeople = function(index){
-		$scope.event.people.push($scope.people[index]);
-		$scope.people[index].added = true;
+	// personnes ajoutées à l'événement
+	$scope.managePeople = function(index){
+
+		if ( !$scope.people[index].added ) {
+			$scope.peopleList.push($scope.people[index].person_id);
+			$scope.people[index].added = true;
+		} else {
+			var index = $scope.peopleList.indexOf($scope.people[index].person_id);
+			if ( index > -1 ) {
+				$scope.peopleList.splice(index, 1);
+				$scope.people[index].added = false;
+			}
+		}
+
 	}
 
 	$scope.addStatus = function(){
@@ -30,25 +44,29 @@ angular.module('clockEnough')
 	}
 
 	$scope.saveEvent = function(){
-		console.log('event saved');
+
 		$scope.tag = $scope.event.date +'&'+$scope.event.hours +'&'+$scope.event.place;
 
-		// personnes ajoutées à l'événement
-		$scope.peopleList = [];
-		$scope.event.people.forEach(function(item, index){
-			$scope.peopleList.push(item.person_id);
-		})
+		//check des données
+		if ( $scope.event.name != "" ) {
 
-		// Appel Api: creation de l'événement
-		FaceAPI.createEvent($scope.event.name, $scope.tag);
-	    $rootScope.$on('createEvent', function(result, data) {
-		    console.log(result, data);
-			// Appel Api: ajout des personnes à l'événement
-			FaceAPI.addUserInGroup(data.group_id, $scope.peopleList.join())
-	    });
-		$rootScope.$on('addUserInGroup', function(result, data) {
-			console.log(result, data);
-		});
+			// Appel Api: creation de l'événement
+			FaceAPI.createEvent($scope.event.name, $scope.tag);
+		    $rootScope.$on('createEvent', function(result, data) {
+			    console.log(result, data);
+				// Appel Api: ajout des personnes à l'événement
+				FaceAPI.addUserInGroup(data.group_id, $scope.peopleList.join())
+		    });
+			$rootScope.$on('addUserInGroup', function(result, data) {
+				console.log(result, data);
+			});
+
+		}else {
+			
+			console.error('Error: Please name the event before saving');
+			$scope.error = true;
+			$scope.event.name = "Veuillez entrer un nom";
+		}
 
 	}
 
