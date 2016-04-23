@@ -47,7 +47,8 @@ angular.module('clockEnough')
 
 		$ionicLoading.show();
 
-		$scope.tag = $scope.event.date +'&'+$scope.event.hours +'&'+$scope.event.place;
+		//chaine de caractères contenant les infos de l'événement
+		$scope.tag = $scope.event.date+' '+$scope.event.hours+' '+$scope.event.place+' status:'+$scope.event.status.join('-');
 
 		//check des données
 		if ( $scope.event.name != "" && $scope.peopleList.length > 0 ) {
@@ -80,8 +81,6 @@ angular.module('clockEnough')
 				template: 'Please name the event, and add almost one person before saving'
 		   });
 			console.error('Error: Please name the event, and add almost one person before saving');
-			// $scope.error = true;
-			// $scope.event.name = "Veuillez entrer un nom";
 		}
 
 	}

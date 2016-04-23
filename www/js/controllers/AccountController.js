@@ -78,3 +78,37 @@ angular.module('clockEnough')
         $scope.infos = $scope.account;
     }
 }])
+
+.controller('AccountDetailsCtrl',
+    ['$scope',
+    '$rootScope',
+    '$stateParams',
+    'FaceAPI',
+    'ionicMaterialInk',
+    'ionicMaterialMotion',
+    function($scope, $rootScope, $stateParams, FaceAPI, ionicMaterialInk, ionicMaterialMotion){
+
+    $scope.groupId = $stateParams.eventId;
+    FaceAPI.getEventInfos($scope.groupId);
+
+    $rootScope.$on('eventInfos', function(event,data){
+        $scope.group = data;
+        console.log($scope.group)
+
+        var tags = $scope.group.tag;
+        tags = tags.split(' ');
+        console.log(tags);
+
+        $scope.group.date = tags[0];
+        $scope.group.hours = tags[1];
+        $scope.group.place = tags[2];
+        $scope.group.status = tags[3].split('status:')[1];
+
+        setTimeout(function(){
+            // ionic materialize animations
+            ionicMaterialMotion.fadeSlideInRight();
+            ionicMaterialInk.displayEffect();
+        },0)
+    });
+
+}])

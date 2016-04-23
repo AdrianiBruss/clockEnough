@@ -101,6 +101,16 @@ angular.module('clockEnough', ['ionic', 'ngCordova','ionic-material'])
       }
     }
   })
+
+    .state('tab.account-details', {
+      url: '/account/:eventId',
+      views: {
+        'tab-account': {
+          templateUrl: 'templates/tab-account-details.html',
+          controller: 'AccountDetailsCtrl'
+        }
+      }
+    })
   .state('tab.signUp', {
     url: '/account/signUp',
     views: {

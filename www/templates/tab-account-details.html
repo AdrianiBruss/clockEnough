@@ -10,13 +10,29 @@
             <h1 class="h1 app-name">clockEnough</h1>
         </div>
         <div class="content">
-        <h2 class="h2 title">Mes événements</h2>
+        <h2 class="h2 title">Event : {{group.group_name}}</h2>
+        <div class="item item-divider">
+            Details de l'événement
+        </div>
+        <p>
+            Date : {{group.date}}
+        </p>
+        <p>
+            Hours : {{group.hours}}
+        </p>
+        <p>
+            Place : {{group.place}}
+        </p>
+        <p>
+            Status : {{group.status}}
+        </p>
+        <div class="item item-divider">
+            Participants
+        </div>
         <ion-list class="list animate-fade-slide-in-right">
-            <ion-item class="item item-avatar item-icon-right" ng-repeat="e in events" href="#/tab/account/{{e.group_id}}">
+            <ion-item class="item item-avatar item-icon-right" ng-repeat="p in group.person">
                 <img src="http://static1.puretrend.com/articles/6/81/06/6/@/932535-melanie-bernier-300x276-2.jpg">
-                <h2>{{e.group_name}}</h2>
-                <ion-option-button class="button-balanced" ng-click="">Confirm</ion-option-button>
-                <ion-option-button class="button-assertive" ng-click="">Delete</ion-option-button>
+                <h2>{{p.person_name}}</h2>
             </ion-item>
         </ion-list>
     </ion-content>
