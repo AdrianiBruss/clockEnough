@@ -62,8 +62,18 @@ angular.module('clockEnough', ['ionic', 'ngCordova','ionic-material'])
       }
     }
   })
+  .state('tab.event-check-status', {
+    url: '/event/:eventId/check/:param',
+    views: {
+      'tab-event': {
+        templateUrl: 'templates/tab-event-check-status.html',
+        controller: 'EventCheckStatusCtrl'
+      }
+    }
+  })
+
   .state('tab.event-capture', {
-    url: '/event/:eventId/capture',
+    url: '/event/:eventId/capture/:check',
     views: {
       'tab-event': {
         templateUrl: 'templates/tab-event-capture.html',
