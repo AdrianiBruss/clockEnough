@@ -93,16 +93,15 @@ angular.module('clockEnough')
 
     $rootScope.$on('eventInfos', function(event,data){
         $scope.group = data;
-        console.log($scope.group)
 
         var tags = $scope.group.tag;
         tags = tags.split(' ');
-        console.log(tags);
 
-        $scope.group.date = tags[0];
-        $scope.group.hours = tags[1];
-        $scope.group.place = tags[2];
-        $scope.group.status = tags[3].split('status:')[1];
+        (tags[0] != undefined) ? $scope.group.date = tags[0] : $scope.group.date = 'No Date Defined';
+        (tags[1] != undefined) ? $scope.group.hours = tags[1] : $scope.group.hours = 'No Hours Defined';
+        (tags[2] != undefined) ? $scope.group.place = tags[2] : $scope.group.place = 'No Place Defined';
+        (tags[3] != undefined) ? $scope.group.status = tags[3].split('status:')[1].split(':').join(', ') : $scope.group.status = 'No Status Defined';
+
 
         setTimeout(function(){
             // ionic materialize animations

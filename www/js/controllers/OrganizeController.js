@@ -48,7 +48,7 @@ angular.module('clockEnough')
 		$ionicLoading.show();
 
 		//chaine de caractères contenant les infos de l'événement
-		$scope.tag = $scope.event.date+' '+$scope.event.hours+' '+$scope.event.place+' status:'+$scope.event.status.join('-');
+		$scope.tag = $scope.event.date+' '+$scope.event.hours+' '+$scope.event.place+' status:'+$scope.event.status.join(':');
 
 		//check des données
 		if ( $scope.event.name != "" && $scope.peopleList.length > 0 ) {
