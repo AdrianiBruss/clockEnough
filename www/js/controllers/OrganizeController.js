@@ -1,6 +1,6 @@
 angular.module('clockEnough')
 
-.controller('OrganizeCtrl', function($scope, $rootScope, FaceAPI) {
+.controller('OrganizeCtrl', function($scope, $state, $rootScope, FaceAPI, $ionicLoading, $ionicPopup) {
 
 	FaceAPI.getAllUsers();
 
@@ -45,10 +45,12 @@ angular.module('clockEnough')
 
 	$scope.saveEvent = function(){
 
+		$ionicLoading.show();
+
 		$scope.tag = $scope.event.date +'&'+$scope.event.hours +'&'+$scope.event.place;
 
 		//check des données
-		if ( $scope.event.name != "" ) {
+		if ( $scope.event.name != "" && $scope.peopleList.length > 0 ) {
 
 			// Appel Api: creation de l'événement
 			FaceAPI.createEvent($scope.event.name, $scope.tag);
@@ -59,13 +61,27 @@ angular.module('clockEnough')
 		    });
 			$rootScope.$on('addUserInGroup', function(result, data) {
 				console.log(result, data);
+				$ionicLoading.hide();
+				var alertPopup = $ionicPopup.alert({
+				    title: 'Great !',
+				    template: 'Your event has been registred with sucess'
+			   });
+			   alertPopup.then(function(res) {
+			    	$state.go('tab.account');
+			   });
 			});
 
 		}else {
-			
-			console.error('Error: Please name the event before saving');
-			$scope.error = true;
-			$scope.event.name = "Veuillez entrer un nom";
+
+			$ionicLoading.hide();
+
+			var alertPopup = $ionicPopup.alert({
+				title: 'Error',
+				template: 'Please name the event, and add almost one person before saving'
+		   });
+			console.error('Error: Please name the event, and add almost one person before saving');
+			// $scope.error = true;
+			// $scope.event.name = "Veuillez entrer un nom";
 		}
 
 	}
