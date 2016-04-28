@@ -24,35 +24,39 @@ angular.module('clockEnough')
     //         date: 'Sam. 32 Fev, 21:00',
     //     }
     // ];
-
+    
     FaceAPI.getAllEvents();
 
     $rootScope.$on('allEvents', function(event,data){
-        $scope.events = data.group;
+        $scope.events = data;
         console.log(data);
-
-        setTimeout(function(){
-            // ionic materialize animations
-            ionicMaterialMotion.fadeSlideInRight();
-            ionicMaterialInk.displayEffect();
-        },0)
-
     });
+
+
+    setTimeout(function(){
+        // ionic materialize animations
+        ionicMaterialMotion.fadeSlideInRight();
+        ionicMaterialInk.displayEffect();
+    },0)
 
 }])
 
-.controller('SignUpCtrl', ['$scope', '$cordovaCamera', function($scope, $cordovaCamera){
+.controller('SignUpCtrl', ['$scope', '$cordovaCamera', 'FaceAPI', '$rootScope', function($scope, $cordovaCamera,FaceAPI,$rootScope){
 
     $scope.icon = true;
+
     $scope.account = {
         firstname : "",
         lastname : "",
         picture: ""
-    }
+    };
+
+    $scope.user_id = null;
+
     $scope.capturePicture = function() {
         var options = {
             quality: 100,
-            destinationType: Camera.DestinationType.DATA_URL,
+            destinationType: Camera.DestinationType.FILE_URI,
             sourceType: Camera.PictureSourceType.CAMERA,
             allowEdit: false,
             encodingType: Camera.EncodingType.JPEG,
@@ -62,13 +66,11 @@ angular.module('clockEnough')
             saveToPhotoAlbum: false,
             correctOrientation:true
         };
-
         $cordovaCamera.getPicture(options).then(function(imageData) {
             var image = document.getElementById('capturedImage');
-            var path = "data:image/jpeg;base64," + imageData
-            image.src = path;
+            image.src = imageData;
             $scope.icon = false;
-            $scope.account.picture = path;
+            $scope.fileURI = imageData;
         }, function(err) {
             console.error(err)
         });
@@ -76,38 +78,45 @@ angular.module('clockEnough')
 
     $scope.saveAccount = function(){
         $scope.infos = $scope.account;
+        var options = new FileUploadOptions();
+        var ft = new FileTransfer();
+        var serveur ="http://mailing.awakit-preprod.com/server/";
+
+        options.fileKey = "uploaded_file";
+        options.fileName = String($scope.fileURI).substr(String($scope.fileURI).lastIndexOf('/') + 1);
+        options.mimeType = "image/jpg";
+
+        ft.upload($scope.fileURI, encodeURI(serveur + "index.php"),
+            function sucess(data){
+                var imgUrl = serveur + data.response;
+                FaceAPI.detectFace(imgUrl);
+            }, 
+            function fail(error){
+                console.log("An error has occurred: Code = " + error.code);
+                console.log("Error =" + error);
+            }, 
+            options
+        );
+
+        if($scope.infos.firstname!== '' && $scope.infos.lastname!== '')
+        {
+            // if( $scope.infos.firstname.indexOf('\'') != -1){
+            //     $scope.infos.firstname.replace(/'/g,"-");
+            // }
+
+            // if( $scope.infos.lastname.indexOf('\'') != -1){
+            //     $scope.infos.lastname.replace(/'/g,"-");
+            // }
+            // FaceAPI.createUser($scope.infos.firstname,$scope.infos.lastname);
+        }
     }
-}])
 
-.controller('AccountDetailsCtrl',
-    ['$scope',
-    '$rootScope',
-    '$stateParams',
-    'FaceAPI',
-    'ionicMaterialInk',
-    'ionicMaterialMotion',
-    function($scope, $rootScope, $stateParams, FaceAPI, ionicMaterialInk, ionicMaterialMotion){
-
-    $scope.groupId = $stateParams.eventId;
-    FaceAPI.getEventInfos($scope.groupId);
-
-    $rootScope.$on('eventInfos', function(event,data){
-        $scope.group = data;
-
-        var tags = $scope.group.tag;
-        tags = tags.split(' ');
-
-        (tags[0] != undefined) ? $scope.group.date = tags[0] : $scope.group.date = 'No Date Defined';
-        (tags[1] != undefined) ? $scope.group.hours = tags[1] : $scope.group.hours = 'No Hours Defined';
-        (tags[2] != undefined) ? $scope.group.place = tags[2] : $scope.group.place = 'No Place Defined';
-        (tags[3] != undefined) ? $scope.group.status = tags[3].split('status:')[1].split(':').join(', ') : $scope.group.status = 'No Status Defined';
-
-
-        setTimeout(function(){
-            // ionic materialize animations
-            ionicMaterialMotion.fadeSlideInRight();
-            ionicMaterialInk.displayEffect();
-        },0)
+    $scope.$on('createUser', function(event,data){
+        // $scope.user_id = data.person_id;
+        // FaceAPI.detectFace($scope.account.picture);
     });
 
+    $scope.$on('detectFace', function(event,data){
+        // FaceAPI.detectFace($scope.user_id,data.face_id);
+    });
 }])
