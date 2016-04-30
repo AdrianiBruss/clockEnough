@@ -1,6 +1,6 @@
 angular.module('clockEnough')
 
-.factory('FaceAPI', ['$http','$rootScope','API_KEY','API_SECRET', function ($http,$rootScope,API_KEY,API_SECRET) {
+.factory('FaceAPI', ['$http','$rootScope','API_KEY','API_SECRET', '$ionicPopup', function ($http,$rootScope,API_KEY,API_SECRET,$ionicPopup) {
 
   return {
     //////Events//////
@@ -53,8 +53,11 @@ angular.module('clockEnough')
       url: url
     }).then(function successCallback(response) {
       $rootScope.$broadcast(event, response.data);
-    }, function errorCallback(response) {
-        return response;
+    }, function errorCallback(error) {
+        $ionicPopup.alert({
+            title: 'API Face ++',
+            template: 'Erreur de l\'API'
+        });
     });
   }
 
