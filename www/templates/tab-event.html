@@ -1,19 +1,18 @@
-<ion-view view-title="Event">
-    <ion-content class="padding">
+<ion-view view-title="Evénement" class="page-manage-event">
+    <ion-content>
     <!-- <button class="button button-large button-positive">
       Large Button
     </button> -->
     <div class="content header-logo">
         <div class="logo">
-            Logo
         </div>
-        <h1 class="h1 app-name">clockEnough</h1>
+        <h1 class="h1 app-name">Clock Enough</h1>
     </div>
     <div class="list">
-        <h2 class="h2 title">Choisir un événement</h2>
         <ion-list class="list animate-fade-slide-in-right">
-            <ion-item class="item item-avatar item-icon-right" ng-repeat="e in events" href="#/tab/event/{{e.group_id}}">
-                <img src="http://static1.puretrend.com/articles/6/81/06/6/@/932535-melanie-bernier-300x276-2.jpg">
+            <ion-item class="item" ng-repeat="e in events">
+                <!-- <img src="http://static1.puretrend.com/articles/6/81/06/6/@/932535-melanie-bernier-300x276-2.jpg"> -->
+                <a href="#/tab/event/{{e.group_id}}"></a>
                 <h2>{{e.group_name}}</h2>
             </ion-item>
         </ion-list>

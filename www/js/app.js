@@ -84,6 +84,7 @@ angular.module('clockEnough', ['ionic', 'ngCordova','ionic-material'])
 
   .state('tab.account', {
     url: '/account',
+    cache: false,
     views: {
       'tab-account': {
         templateUrl: 'templates/tab-account.html',
