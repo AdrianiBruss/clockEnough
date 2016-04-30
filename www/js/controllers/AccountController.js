@@ -6,19 +6,17 @@ angular.module('clockEnough')
         $state.go(path);
     };
     
-    FaceAPI.getUserInfos('4239c3ab8eb74d07eea27cfa7a77f806');
-    
-    // var user = JSON.parse(localStorage.getItem('User'));
+    var user = JSON.parse(localStorage.getItem('User'));
 
-    // if(user != null)
-    // {
-    //     $scope.user_id = user.person_id;
-    //     FaceAPI.getUserInfos($scope.user_id);
-    // }
-    // else{
-    //     console.log(user);
-    // }
-    // // FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
+    if(user != null)
+    {
+        $scope.user_id = user.person_id;
+        FaceAPI.getUserInfos($scope.user_id);
+    }
+    else{
+        console.log(user);
+    }
+    // FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
 
     $scope.$on('userInfos', function(event,data){
         $scope.events = data.group;
