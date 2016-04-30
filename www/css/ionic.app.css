@@ -9767,3 +9767,6 @@ input[type="text"] {
 #page-create-event .people-overflow {
   max-height: 150px;
   overflow: scroll; }
+
+.item-input-wrapper input {
+  border-bottom: none; }

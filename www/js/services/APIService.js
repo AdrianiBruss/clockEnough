@@ -38,8 +38,8 @@ angular.module('clockEnough')
     deleteUserinGroup: function(idPerson,idGroup) {
       callAjax('GET','https://apius.faceplusplus.com/v2/group/remove_person?api_secret=' + API_SECRET + '&api_key=' + API_KEY + '&person_id=' + idPerson, + '&group_id='+ idGroup,'deleteUserInGroup');
     },
-    recognizeUser: function(id) {
-      callAjax('GET','https://apius.faceplusplus.com/v2/recognition/identify?api_secret=' + API_SECRET + '&api_key=' + API_KEY + '&group_id=' + id,'recognizeUser');
+    recognizeUser: function(id,url) {
+      callAjax('GET','https://apius.faceplusplus.com/v2/recognition/identify?api_secret=' + API_SECRET + '&api_key=' + API_KEY + '&group_id=' + id + '&url=' + url,'recognizeUser');
     },
     /////Face/////
     detectFace: function(url) {

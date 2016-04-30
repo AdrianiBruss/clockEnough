@@ -10,7 +10,7 @@
             <h1 class="h1 app-name">clockEnough</h1>
         </div>
         <div class="content">
-        <h2 class="h2 title">Event : {{group.group_name}}</h2>
+        <h2 class="h2 title">{{group.group_name}}</h2>
         <div class="item item-divider">
             Details de l'événement
         </div>
@@ -37,7 +37,7 @@
         <div class="item item-divider">
             Participants
         </div>
-        <ion-list class="list animate-fade-slide-in-right">
+        <ion-list class="list">
             <ion-item class="item item-avatar item-icon-right" ng-repeat="p in group.person">
                 <img src="http://static1.puretrend.com/articles/6/81/06/6/@/932535-melanie-bernier-300x276-2.jpg">
                 <h2>{{p.person_name}}</h2>

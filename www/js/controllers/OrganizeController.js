@@ -1,10 +1,10 @@
 angular.module('clockEnough')
 
-.controller('OrganizeCtrl', function($scope, $state, $rootScope, FaceAPI, $ionicLoading, $ionicPopup) {
+.controller('OrganizeCtrl', function($scope, $state, FaceAPI, $ionicLoading, $ionicPopup) {
 
 	FaceAPI.getAllUsers();
 
-	$rootScope.$on('allUsers', function(event,data){
+	$scope.$on('allUsers', function(event,data){
 		$scope.people = data.person;
     });
 
@@ -19,7 +19,6 @@ angular.module('clockEnough')
 		statusInput: "",
 		status: [],
 		people: []
-
 	}
 
 	// personnes ajoutées à l'événement
@@ -48,24 +47,22 @@ angular.module('clockEnough')
 		$ionicLoading.show();
 
 		//chaine de caractères contenant les infos de l'événement
-		$scope.tag = $scope.event.date+' '+$scope.event.hours+' '+$scope.event.place+' status:'+$scope.event.status.join(':');
+		$scope.tag = $scope.event.date+'_'+$scope.event.hours+'_'+$scope.event.place+'_'+$scope.event.status.join(':');
 
 		//check des données
 		if ( $scope.event.name != "" && $scope.peopleList.length > 0 ) {
 
 			// Appel Api: creation de l'événement
 			FaceAPI.createEvent($scope.event.name, $scope.tag);
-		    $rootScope.$on('createEvent', function(result, data) {
-			    console.log(result, data);
+		    $scope.$on('createEvent', function(result, data) {
 				// Appel Api: ajout des personnes à l'événement
 				FaceAPI.addUserInGroup(data.group_id, $scope.peopleList.join())
 		    });
-			$rootScope.$on('addUserInGroup', function(result, data) {
-				console.log(result, data);
+			$scope.$on('addUserInGroup', function(result, data) {
 				$ionicLoading.hide();
 				var alertPopup = $ionicPopup.alert({
-				    title: 'Great !',
-				    template: 'Your event has been registred with sucess'
+				    title: 'Nouvel événement',
+				    template: 'Votre événement a bien été créé !'
 			   });
 			   alertPopup.then(function(res) {
 			    	$state.go('tab.account');
@@ -77,10 +74,9 @@ angular.module('clockEnough')
 			$ionicLoading.hide();
 
 			var alertPopup = $ionicPopup.alert({
-				title: 'Error',
-				template: 'Please name the event, and add almost one person before saving'
-		   });
-			console.error('Error: Please name the event, and add almost one person before saving');
+				title: 'Nouvel événement',
+				template: 'Veuillez nommer et ajouter au moins une personne à votre événement'
+		   	});
 		}
 
 	}

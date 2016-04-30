@@ -36,11 +36,11 @@ angular.module('clockEnough', ['ionic', 'ngCordova','ionic-material'])
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
-      url: '/tab',
-      abstract: true,
-      templateUrl: 'templates/tabs.html'
-    })
+  .state('tab', {
+    url: '/tab',
+    abstract: true,
+    templateUrl: 'templates/tabs.html'
+  })
 
   // Each tab has its own nav history stack:
 
@@ -53,44 +53,34 @@ angular.module('clockEnough', ['ionic', 'ngCordova','ionic-material'])
       }
     }
   })
-  .state('tab.event-check', {
-    url: '/event/:eventId',
-    views: {
-      'tab-event': {
-        templateUrl: 'templates/tab-event-check.html',
-        controller: 'EventCheckCtrl'
-      }
-    }
-  })
-  .state('tab.event-capture', {
-    url: '/event/:eventId/capture',
-    views: {
-      'tab-event': {
-        templateUrl: 'templates/tab-event-capture.html',
-        controller: 'EventCaptureCtrl'
-      }
-    }
-  })
-
-
-  .state('tab.organize', {
-      url: '/organize',
+    .state('tab.event-check', {
+      url: '/event/:eventId',
       views: {
-        'tab-organize': {
-          templateUrl: 'templates/tab-organize.html',
-          controller: 'OrganizeCtrl'
+        'tab-event': {
+          templateUrl: 'templates/tab-event-check.html',
+          controller: 'EventCheckCtrl'
         }
       }
     })
-    // .state('tab.chat-detail', {
-    //   url: '/chats/:chatId',
-    //   views: {
-    //     'tab-chats': {
-    //       templateUrl: 'templates/chat-detail.html',
-    //       controller: 'ChatDetailCtrl'
-    //     }
-    //   }
-    // })
+    .state('tab.event-capture', {
+      url: '/event/:eventId/capture',
+      views: {
+        'tab-event': {
+          templateUrl: 'templates/tab-event-capture.html',
+          controller: 'EventCaptureCtrl'
+        }
+      }
+    })
+
+  .state('tab.organize', {
+    url: '/organize',
+    views: {
+      'tab-organize': {
+        templateUrl: 'templates/tab-organize.html',
+        controller: 'OrganizeCtrl'
+      }
+    }
+  })
 
   .state('tab.account', {
     url: '/account',
@@ -101,7 +91,6 @@ angular.module('clockEnough', ['ionic', 'ngCordova','ionic-material'])
       }
     }
   })
-
     .state('tab.account-details', {
       url: '/account/:eventId',
       views: {
@@ -111,15 +100,15 @@ angular.module('clockEnough', ['ionic', 'ngCordova','ionic-material'])
         }
       }
     })
-  .state('tab.signUp', {
-    url: '/account/signUp',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/signUp.html',
-        controller: 'SignUpCtrl'
+    .state('tab.signUp', {
+      url: '/account/signUp',
+      views: {
+        'tab-account': {
+          templateUrl: 'templates/signUp.html',
+          controller: 'SignUpCtrl'
+        }
       }
-    }
-  });
+    });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/account');
