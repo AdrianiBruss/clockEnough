@@ -11,9 +11,9 @@
         </div>
         <div class="userInfos">
             <h2 class="h2 title">{{name}}</h2>
-        </div>          
-        <button ng-if="tags" ng-repeat="e in event.status"class="button button-large button-block button-stable" ng-click="addStatus(e)">{{e}}</button>
-        <h2 class="h2 title" ng-if="!tags" ng-repeat="e in event.status">Statut(s) :<br> {{e}}</h2>
+        </div>
+        <button ng-if="!userInfos" ng-repeat="e in event.status"class="button button-large button-block button-stable" ng-click="addStatus(e)">{{e}}</button>
+        <h2 class="h2 title" ng-if="userInfos">Statut(s) :<br> {{tags}}</h2>
       </div>
     </ion-content>
 </ion-view>

@@ -153,21 +153,21 @@ angular.module('clockEnough')
 }])
 
 // tab.event-check-status ( possibilité d'attribuer ou verifier un status )
-.controller('EventCheckStatusCtrl', ['FaceAPI', '$scope', '$state', '$stateParams', function(FaceAPI, $scope, $state, $stateParams) {
-	console.log($stateParams);
+.controller('EventCheckStatusCtrl', ['FaceAPI', '$scope', '$state', '$stateParams', '$ionicLoading', function(FaceAPI, $scope, $state, $stateParams, $ionicLoading) {
 
 	FaceAPI.getFace($stateParams.faceId);
 	FaceAPI.getEventInfos($stateParams.eventId);
 
-	$scope.tags = "";
+	( $stateParams.param == "status" ) ? $scope.userInfos = true : $scope.userInfos = false;
 
 	$scope.$on('getFace', function(event, data){
 		$scope.name = data.face_info[0].person[0].person_name.replace('_',' ');
 		$scope.person_id = data.face_info[0].person[0].person_id;
-		$scope.tags = data.face_info[0].tag;
+		$scope.tags = data.face_info[0].person[0].tag.replace('status:','');
 		$scope.img = data.face_info[0].url;
 	})
 
+	// status de l'événement
 	$scope.$on('eventInfos', function(event, data){
 		var tag = data.tag.split('_');
         $scope.event = {
@@ -179,9 +179,16 @@ angular.module('clockEnough')
 
 	$scope.addStatus = function(status){
 
-		$scope.status = status;
+		$ionicLoading.show();
+
+		$scope.status = 'status:'+status;
 		FaceAPI.updateUser($scope.person_id, $scope.status);
 
 	};
+
+	$scope.$on('updateUser', function(event, data){
+		$ionicLoading.hide();
+		$state.go('tab.event-check', {'eventId': $stateParams.eventId})
+	})
 
 }])
