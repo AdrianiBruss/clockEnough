@@ -1,6 +1,13 @@
 angular.module('clockEnough')
 
-.controller('OrganizeCtrl',['$scope', '$state', 'FaceAPI', '$ionicLoading', '$ionicPopup', '$filter', function($scope, $state, FaceAPI, $ionicLoading, $ionicPopup, $filter){
+.controller('OrganizeCtrl',[
+	'$scope',
+	'$state',
+	'FaceAPI',
+	'$ionicLoading',
+	'$ionicPopup',
+	'$filter',
+	function($scope, $state, FaceAPI, $ionicLoading, $ionicPopup, $filter){
 
 	FaceAPI.getAllUsers();
 
@@ -79,7 +86,7 @@ angular.module('clockEnough')
 			var alertPopup = $ionicPopup.alert({
 				title: 'Nouvel événement',
 				template: 'Veuillez nommer et ajouter au moins une personne à votre événement'
-		   	});
+			});
 		}
 
 	}

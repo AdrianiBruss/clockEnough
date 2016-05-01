@@ -1,6 +1,14 @@
 angular.module('clockEnough')
 
-.controller('AccountCtrl', ['$scope', 'ionicMaterialInk', 'ionicMaterialMotion', '$state', 'FaceAPI', '$ionicLoading', function($scope, ionicMaterialInk, ionicMaterialMotion, $state, FaceAPI, $ionicLoading) {
+.controller('AccountCtrl', [
+    '$scope',
+    'ionicMaterialInk',
+    'ionicMaterialMotion',
+    '$state',
+    'FaceAPI',
+    '$ionicLoading',
+    function($scope, ionicMaterialInk, ionicMaterialMotion, $state, FaceAPI, $ionicLoading) {
+
     $ionicLoading.show();
     $scope.goTo = function ( path ) {
         $state.go(path);
@@ -30,7 +38,12 @@ angular.module('clockEnough')
 
 }])
 
-.controller('AccountDetailsCtrl', ['$scope','$stateParams', 'FaceAPI', '$filter', function($scope, $stateParams, FaceAPI, $filter) {
+.controller('AccountDetailsCtrl', [
+    '$scope',
+    '$stateParams',
+    'FaceAPI',
+    '$filter',
+    function($scope, $stateParams, FaceAPI, $filter) {
 
     FaceAPI.getEventInfos($stateParams.eventId);
 
@@ -48,7 +61,15 @@ angular.module('clockEnough')
 
 }])
 
-.controller('SignUpCtrl', ['$scope', '$cordovaCamera', 'FaceAPI', '$rootScope', '$ionicPopup', '$state','$ionicLoading', function($scope, $cordovaCamera,FaceAPI,$rootScope,$ionicPopup,$state, $ionicLoading){
+.controller('SignUpCtrl', [
+    '$scope',
+    '$cordovaCamera',
+    'FaceAPI',
+    '$rootScope',
+    '$ionicPopup',
+    '$state',
+    '$ionicLoading',
+    function($scope, $cordovaCamera,FaceAPI,$rootScope,$ionicPopup,$state, $ionicLoading){
 
     $scope.icon = true;
 

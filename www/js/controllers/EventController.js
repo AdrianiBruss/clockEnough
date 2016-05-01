@@ -1,7 +1,16 @@
 angular.module('clockEnough')
 
 // tab.event ( Tous les événements );
-.controller('EventCtrl', function($scope, $rootScope, ionicMaterialInk, ionicMaterialMotion, $state, FaceAPI, $ionicLoading) {
+.controller('EventCtrl', [
+	'$scope',
+	'$rootScope',
+	'ionicMaterialInk',
+	'ionicMaterialMotion',
+	'$state',
+	'FaceAPI',
+	'$ionicLoading',
+	function($scope, $rootScope, ionicMaterialInk, ionicMaterialMotion, $state, FaceAPI, $ionicLoading) {
+
 	$ionicLoading.show();
 	$scope.goTo = function ( path ) {
 		$state.go(path);
@@ -18,19 +27,34 @@ angular.module('clockEnough')
 			$ionicLoading.hide();
 		},0)
     });
-})
+}])
 
 // tab.event-check ( Detail d'un événement );
-.controller('EventCheckCtrl', function($scope, $state, $stateParams, FaceAPI, $rootScope) {
+.controller('EventCheckCtrl', [
+	'$scope',
+	'$state',
+	'$stateParams',
+	'FaceAPI',
+	'$rootScope',
+	function($scope, $state, $stateParams, FaceAPI, $rootScope) {
 
 	FaceAPI.getEventInfos($stateParams.eventId);
 	$scope.$on('eventInfos', function(event,data){
 		$scope.event = data;
 	});
-})
+}])
 
 // tab.event-capture ( prise en photo de l'utilisateur )
-.controller('EventCaptureCtrl', ['$scope', '$cordovaCamera', 'FaceAPI', '$rootScope', '$ionicPopup', '$state','$stateParams', '$ionicLoading', function($scope, $cordovaCamera,FaceAPI,$rootScope,$ionicPopup,$state, $stateParams, $ionicLoading){
+.controller('EventCaptureCtrl', [
+	'$scope',
+	'$cordovaCamera',
+	'FaceAPI',
+	'$rootScope',
+	'$ionicPopup',
+	'$state',
+	'$stateParams',
+	'$ionicLoading',
+	function($scope, $cordovaCamera,FaceAPI,$rootScope,$ionicPopup,$state, $stateParams, $ionicLoading){
 
     $scope.icon = true;
     $scope.group_id = $stateParams.eventId;
@@ -105,13 +129,11 @@ angular.module('clockEnough')
 
     //popup d'alerte résultat
     $scope.$on('recognizeUser', function(event,data){
-		$scope.candidate = data.face[0].candidate[0];
-		console.log($scope.candidate);
+		$scope.face = data.face[0];
+		$scope.candidate = $scope.face.candidate[0];
 
        if(angular.isDefined($scope.candidate) ){
-		   console.log('--confidence', $scope.candidate.confidence)
 		   if ( $scope.candidate.confidence > 35 ) {
-			   console.log(typeof($scope.candidate.person_id));
     		   FaceAPI.getUserInfos($scope.candidate.person_id);
 		   }else {
 			   $ionicLoading.hide();
@@ -124,7 +146,7 @@ angular.module('clockEnough')
         }
     });
 
-	// FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
+	// FaceAPI.getUserInfos('59454b2703b2359f18e00927d23f5f25');
 	// verification de l'appartenance de l'utilisateur au groupe en question
 	$scope.$on('userInfos', function(event, data){
 		$ionicLoading.hide();
@@ -137,8 +159,8 @@ angular.module('clockEnough')
 			$state.go('tab.event-check-status', {
 					'eventId': $scope.group_id,
 					'param': $scope.page_param,
-					'faceId' : $scope.candidate.face_id
-					// 'faceId' : "7ef4d3ea38ad390613c482a6679d4144"
+					'faceId' : data.face[0].face_id
+					// 'faceId' : "1249cfb4b412704f350cc0f7fa85afd4"
 				}
 			)
 		} else {
@@ -156,18 +178,29 @@ angular.module('clockEnough')
 }])
 
 // tab.event-check-status ( possibilité d'attribuer ou verifier un status )
-.controller('EventCheckStatusCtrl', ['FaceAPI', '$scope', '$state', '$stateParams', '$ionicLoading', function(FaceAPI, $scope, $state, $stateParams, $ionicLoading) {
+.controller('EventCheckStatusCtrl', [
+	'FaceAPI',
+	'$scope',
+	'$state',
+	'$stateParams',
+	'$ionicLoading',
+	function(FaceAPI, $scope, $state, $stateParams, $ionicLoading) {
 
 	FaceAPI.getFace($stateParams.faceId);
 	FaceAPI.getEventInfos($stateParams.eventId);
 
-	( $stateParams.param == "status" ) ? $scope.userInfos = true : $scope.userInfos = false;
+	if ( $stateParams.param == "status" ) {
+		$scope.userInfos = true;
+	} else {
+		$scope.userInfos = false;
+	}
 
 	$scope.$on('getFace', function(event, data){
 		$scope.name = data.face_info[0].person[0].person_name.replace('_',' ');
 		$scope.person_id = data.face_info[0].person[0].person_id;
 		$scope.tags = data.face_info[0].person[0].tag.replace('status:','');
 		$scope.img = data.face_info[0].url;
+
 	})
 
 	// status de l'événement
