@@ -16,7 +16,7 @@ angular.module('clockEnough')
     else{
         console.log(user);
     }
-    FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
+    // FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
 
     $scope.$on('userInfos', function(event,data){
         $scope.events = data.group;
