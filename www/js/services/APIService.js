@@ -21,6 +21,8 @@ angular.module('clockEnough')
       callAjax('GET','https://apius.faceplusplus.com/v2/info/get_person_list?api_secret=' + API_SECRET + '&api_key=' + API_KEY + '','allUsers');
     },
     getUserInfos: function(idUser) {
+        console.log(idUser);
+        console.log(typeof(idUser));
       callAjax('GET','https://apius.faceplusplus.com/v2/person/get_info?api_secret=' + API_SECRET + '&api_key=' + API_KEY + '&person_id=' + idUser,'userInfos');
     },
     createUser: function(familyName,firstName) {

@@ -1,7 +1,8 @@
 angular.module('clockEnough')
 
 // tab.event ( Tous les événements );
-.controller('EventCtrl', function($scope, $rootScope, ionicMaterialInk, ionicMaterialMotion, $state, FaceAPI) {
+.controller('EventCtrl', function($scope, $rootScope, ionicMaterialInk, ionicMaterialMotion, $state, FaceAPI, $ionicLoading) {
+	$ionicLoading.show();
 	$scope.goTo = function ( path ) {
 		$state.go(path);
 	};
@@ -14,6 +15,7 @@ angular.module('clockEnough')
 			// ionic materialize animations
 			ionicMaterialMotion.fadeSlideInRight();
 			ionicMaterialInk.displayEffect();
+			$ionicLoading.hide();
 		},0)
     });
 })
@@ -109,6 +111,7 @@ angular.module('clockEnough')
        if(angular.isDefined($scope.candidate) ){
 		   console.log('--confidence', $scope.candidate.confidence)
 		   if ( $scope.candidate.confidence > 35 ) {
+			   console.log(typeof($scope.candidate.person_id));
     		   FaceAPI.getUserInfos($scope.candidate.person_id);
 		   }else {
 			   $ionicLoading.hide();

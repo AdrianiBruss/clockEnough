@@ -1,17 +1,19 @@
 angular.module('clockEnough')
 
-.controller('AccountCtrl', ['$scope', 'ionicMaterialInk', 'ionicMaterialMotion', '$state', 'FaceAPI', function($scope, ionicMaterialInk, ionicMaterialMotion, $state, FaceAPI) {
-
+.controller('AccountCtrl', ['$scope', 'ionicMaterialInk', 'ionicMaterialMotion', '$state', 'FaceAPI', '$ionicLoading', function($scope, ionicMaterialInk, ionicMaterialMotion, $state, FaceAPI, $ionicLoading) {
+    $ionicLoading.show();
     $scope.goTo = function ( path ) {
         $state.go(path);
     };
-    
+
     var user = JSON.parse(localStorage.getItem('User'));
 
     if(user != null)
     {
         $scope.user_id = user.person_id;
         FaceAPI.getUserInfos($scope.user_id);
+    }else {
+        $ionicLoading.hide();
     }
 
     // FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
@@ -22,6 +24,7 @@ angular.module('clockEnough')
             // ionic materialize animations
             ionicMaterialMotion.fadeSlideInRight();
             ionicMaterialInk.displayEffect();
+            $ionicLoading.hide();
         },100);
     });
 
@@ -45,7 +48,7 @@ angular.module('clockEnough')
 
 }])
 
-.controller('SignUpCtrl', ['$scope', '$cordovaCamera', 'FaceAPI', '$rootScope', '$ionicPopup', '$state', function($scope, $cordovaCamera,FaceAPI,$rootScope,$ionicPopup,$state){
+.controller('SignUpCtrl', ['$scope', '$cordovaCamera', 'FaceAPI', '$rootScope', '$ionicPopup', '$state','$ionicLoading', function($scope, $cordovaCamera,FaceAPI,$rootScope,$ionicPopup,$state, $ionicLoading){
 
     $scope.icon = true;
 
@@ -85,6 +88,9 @@ angular.module('clockEnough')
     };
 
     $scope.saveAccount = function(){
+
+        $ionicLoading.show();
+
         $scope.infos = $scope.account;
         var options = new FileUploadOptions();
         var ft = new FileTransfer();
@@ -98,6 +104,7 @@ angular.module('clockEnough')
 
             if($scope.infos.firstname!== '' && $scope.infos.lastname!== '')
             {
+                $ionicLoading.hide();
                 $ionicPopup.confirm({
                     title: 'Création du compte',
                     template: 'Confirmez votre choix',
@@ -108,6 +115,7 @@ angular.module('clockEnough')
                       type: 'button-positive',
                       onTap: function(e)
                         {
+                            $ionicLoading.show();
                             // upload de la photo sur le serveur via le plugin File Transfer
                             // détection du visage via l'API grâce à l'URL de l'image retournée par le serveur
                             ft.upload($scope.fileURI, encodeURI(serveur + "index.php"),
@@ -128,11 +136,13 @@ angular.module('clockEnough')
             }
             else
             {
+                $ionicLoading.hide();
                 $scope.alertUser('Création du compte', 'Veuillez remplir tous les champs !');
             }
         }
         else
         {
+            $ionicLoading.hide();
             $scope.alertUser('Création du compte', 'Veuillez prendre une photo !');
         }
     };
@@ -152,6 +162,8 @@ angular.module('clockEnough')
             $scope.preview.src = "";
         }
         else{
+
+            $ionicLoading.hide();
             $scope.alertUser('Création du compte', 'Aucun visage n\'a été détecté, essayez à nouveau !');
         }
     });
@@ -167,6 +179,7 @@ angular.module('clockEnough')
     // confirmation de la souscription quand tout s'est bien passsé
     // retour à la page "account"
     $scope.$on('addUserFace', function(event,data){
+        $ionicLoading.hide();
         $scope.alertUser('Création du compte', 'Votre compte a bien été créé !');
         $state.go('tab.account', {}, {reload: true});
     });

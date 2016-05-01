@@ -24,7 +24,7 @@ angular.module('clockEnough', ['ionic', 'ngCordova','ionic-material'])
   });
 })
 
-.constant('API_KEY',' f4af3f6878deb1dcd27373c08e3a3b21')
+.constant('API_KEY','f4af3f6878deb1dcd27373c08e3a3b21')
 .constant('API_SECRET','B7gzpMop_JGEolQdFnN1MIxAJWscXh1G')
 
 .config(function($stateProvider, $urlRouterProvider) {
