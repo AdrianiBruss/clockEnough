@@ -1,20 +1,19 @@
-<ion-view view-title="Event">
+<ion-view view-title="Evénement" class="page-event-check page-event-check-status">
     <ion-content>
     <div class="content header-logo">
         <div class="logo">
-            Logo
         </div>
-        <h1 class="h1 app-name">clockEnough</h1>
+        <h1 class="h1 app-name">Clock Enough</h1>
     </div>
     <div class="list">
-        Response : OK or noK
-        <!-- <h2 class="h2 title">{{group.group_name}}</h2>
-        <a class="button button-large button-block button-stable" href="#/tab/event/{{group.group_id}}/capture/entry">
-          Check Entry / departure
-        </a>
-        <a class="button button-large button-block button-stable" href="#/tab/event/{{group.group_id}}/capture/status">
-          Check Status
-        </a> -->
-    </div>
+        <div class="picture">
+          <img id="profilePicture" src="{{img}}" alt="profilePicture" />
+        </div>
+        <div class="userInfos">
+            <h2 class="h2 title">{{name}}</h2>
+        </div>          
+        <button ng-if="tags" ng-repeat="e in event.status"class="button button-large button-block button-stable" ng-click="addStatus(e)">{{e}}</button>
+        <h2 class="h2 title" ng-if="!tags" ng-repeat="e in event.status">Statut(s) :<br> {{e}}</h2>
+      </div>
     </ion-content>
 </ion-view>

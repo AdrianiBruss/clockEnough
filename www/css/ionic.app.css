@@ -9857,3 +9857,10 @@ input[type="text"] {
 .page-event-check .button-large {
   width: 70%;
   margin: 20px 0; }
+
+.page-event-check .userInfos {
+  width: 100%;
+  margin: 0 0 50px 0; }
+  .page-event-check .userInfos h2 {
+    display: inline-block;
+    margin: 0 30px; }
