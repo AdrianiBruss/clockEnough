@@ -9858,7 +9858,20 @@ input[type="text"] {
 
 .page-event-check .userInfos {
   width: 100%;
-  margin: 0 0 50px 0; }
+  margin: 0 0 20px 0; }
   .page-event-check .userInfos h2 {
     display: inline-block;
-    margin: 0 30px; }
+    margin: 0 30px;
+    text-transform: capitalize; }
+
+.page-event-check h2.tags {
+  color: #DEDEDE; }
+
+.page-event-check .picture {
+  border: none;
+  height: auto; }
+
+.page-event-check .statut {
+  margin: 0 20px;
+  font-size: 20px;
+  display: inline-block; }
