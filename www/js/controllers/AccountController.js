@@ -6,17 +6,17 @@ angular.module('clockEnough')
         $state.go(path);
     };
     
-    var user = JSON.parse(localStorage.getItem('User'));
+    // var user = JSON.parse(localStorage.getItem('User'));
 
-    if(user != null)
-    {
-        $scope.user_id = user.person_id;
-        FaceAPI.getUserInfos($scope.user_id);
-    }
-    else{
-        console.log(user);
-    }
-    // FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
+    // if(user != null)
+    // {
+    //     $scope.user_id = user.person_id;
+    //     FaceAPI.getUserInfos($scope.user_id);
+    // }
+    // else{
+    //     console.log(user);
+    // }
+    FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');    
 
     $scope.$on('userInfos', function(event,data){
         $scope.events = data.group;
@@ -37,10 +37,10 @@ angular.module('clockEnough')
         var tag = data.tag.split('_');
         $scope.group = {
             'group_name' : data.group_name,
-            'date'  : $filter('date')(tag[0], "dd/MM/yyyy"),
-            'hours'  : $filter('date')(tag[1], "HH:mm:ss"),
+            'date'  : tag[0],
+            'hour'  : tag[1],
             'place' : tag[2],
-            'status' : tag[3],
+            'status' : tag[3].replace('status:','').replace(/:/gi,', '),
             'person' : data.person
         };
     });

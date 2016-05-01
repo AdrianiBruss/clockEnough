@@ -9795,6 +9795,12 @@ input[type="text"] {
   color: #ef473a;
   border-color: #ef473a; }
 
+.item.item-avatar > img {
+  top: 12px;
+  max-width: 30px;
+  max-height: 30px;
+  border-radius: 0; }
+
 .animate-fade-slide-in-right .list .item {
   text-align: center;
   background: url("http://ronald-site.pagesperso-orange.fr/image/bg_event.png") no-repeat center center;
@@ -9822,7 +9828,9 @@ input[type="text"] {
     font-size: 26px;
     color: white;
     text-transform: uppercase;
-    font-weight: 400; }
+    font-weight: 400;
+    white-space: normal;
+    width: 90%; }
 
 #page-create-event .people-overflow {
   max-height: 150px;
