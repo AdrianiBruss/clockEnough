@@ -104,8 +104,10 @@ angular.module('clockEnough')
     //popup d'alerte résultat
     $scope.$on('recognizeUser', function(event,data){
 		$scope.candidate = data.face[0].candidate[0];
+		console.log($scope.candidate);
 
        if(angular.isDefined($scope.candidate) ){
+		   console.log('--confidence', $scope.candidate.confidence)
 		   if ( $scope.candidate.confidence > 35 ) {
     		   FaceAPI.getUserInfos($scope.candidate.person_id);
 		   }else {
@@ -119,9 +121,11 @@ angular.module('clockEnough')
         }
     });
 
-	// FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
+	FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
 	// verification de l'appartenance de l'utilisateur au groupe en question
 	$scope.$on('userInfos', function(event, data){
+		console.log(data);
+		console.log('on user infos')
 		$ionicLoading.hide();
 		$scope.belongsTo = data.group.filter(function(group){
 			return group.group_id == $scope.group_id;
@@ -132,7 +136,8 @@ angular.module('clockEnough')
 			$state.go('tab.event-check-status', {
 					'eventId': $scope.group_id,
 					'param': $scope.page_param,
-					'personId' : $scope.candidate.person_id
+					// 'faceId' : $scope.candidate.face_id
+					'faceId' : "7ef4d3ea38ad390613c482a6679d4144"
 				}
 			)
 		} else {
@@ -150,8 +155,36 @@ angular.module('clockEnough')
 }])
 
 // tab.event-check-status ( possibilité d'attribuer ou verifier un status )
-.controller('EventCheckStatusCtrl', function(FaceAPI, $scope, $state, $stateParams) {
-	console.log('checkstatus');
+.controller('EventCheckStatusCtrl', ['FaceAPI', '$scope', '$state', '$stateParams', function(FaceAPI, $scope, $state, $stateParams) {
 	console.log($stateParams);
 
-})
+	FaceAPI.getFace($stateParams.faceId);
+	FaceAPI.getEventInfos($stateParams.eventId);
+
+	$scope.tags = "";
+
+	$scope.$on('getFace', function(event, data){
+		$scope.name = data.face_info[0].person[0].person_name.replace('_',' ');
+		$scope.person_id = data.face_info[0].person[0].person_id;
+		$scope.tags = data.face_info[0].tag;
+		$scope.img = data.face_info[0].url;
+	})
+
+	$scope.$on('eventInfos', function(event, data){
+		var tag = data.tag.split('_');
+        $scope.event = {
+            'group_name' : data.group_name,
+            'status' : tag[3].replace('status:','').replace(/:/gi,', '),
+        };
+		$scope.event.status = $scope.event.status.split(', ');
+		console.log($scope.event.status);
+	})
+
+	$scope.addStatus = function(status){
+
+		$scope.status = status;
+		FaceAPI.updateUser($scope.person_id, $scope.status);
+
+	};
+
+}])

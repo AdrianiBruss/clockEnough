@@ -72,7 +72,7 @@ angular.module('clockEnough', ['ionic', 'ngCordova','ionic-material'])
 
     // Attribution ou verification de l'utilisateur;
     .state('tab.event-check-status', {
-      url: '/event/:eventId/check/:param/:personId',
+      url: '/event/:eventId/check/:param/:faceId',
       views: {
         'tab-event': {
           templateUrl: 'templates/tab-event-check-status.html',
