@@ -6,18 +6,15 @@ angular.module('clockEnough')
         $state.go(path);
     };
     
-    // var user = JSON.parse(localStorage.getItem('User'));
+    var user = JSON.parse(localStorage.getItem('User'));
 
-    // if(user != null)
-    // {
-    //     $scope.user_id = user.person_id;
-    //     FaceAPI.getUserInfos($scope.user_id);
-    // }
-    // else{
-    //     console.log(user);
-    // }
+    if(user != null)
+    {
+        $scope.user_id = user.person_id;
+        FaceAPI.getUserInfos($scope.user_id);
+    }
 
-    FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
+    // FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
 
     $scope.$on('userInfos', function(event,data){
         $scope.events = data.group;
@@ -91,7 +88,7 @@ angular.module('clockEnough')
         $scope.infos = $scope.account;
         var options = new FileUploadOptions();
         var ft = new FileTransfer();
-        var serveur ="http://mailing.awakit-preprod.com/Renault/";
+        var serveur ="http://clockenough.adrien-brussolo.com/";
 
         if(angular.isDefined($scope.fileURI))
         {
