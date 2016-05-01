@@ -121,7 +121,7 @@ angular.module('clockEnough')
         }
     });
 
-	FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
+	// FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
 	// verification de l'appartenance de l'utilisateur au groupe en question
 	$scope.$on('userInfos', function(event, data){
 		$ionicLoading.hide();
@@ -134,8 +134,8 @@ angular.module('clockEnough')
 			$state.go('tab.event-check-status', {
 					'eventId': $scope.group_id,
 					'param': $scope.page_param,
-					// 'faceId' : $scope.candidate.face_id
-					'faceId' : "7ef4d3ea38ad390613c482a6679d4144"
+					'faceId' : $scope.candidate.face_id
+					// 'faceId' : "7ef4d3ea38ad390613c482a6679d4144"
 				}
 			)
 		} else {

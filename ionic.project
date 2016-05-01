@@ -1,5 +1,8 @@
 {
   "name": "clockEnough",
-  "app_id": "",
-  "gulpStartupTasks": ["sass", "watch"]
+  "app_id": "43619f94",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ]
 }
