@@ -1,6 +1,6 @@
 angular.module('clockEnough')
 
-.controller('AccountCtrl', ['$scope', 'ionicMaterialInk', 'ionicMaterialMotion', '$state', 'FaceAPI','$window', function($scope, ionicMaterialInk, ionicMaterialMotion, $state, FaceAPI, $window) {
+.controller('AccountCtrl', ['$scope', 'ionicMaterialInk', 'ionicMaterialMotion', '$state', 'FaceAPI', function($scope, ionicMaterialInk, ionicMaterialMotion, $state, FaceAPI) {
 
     $scope.goTo = function ( path ) {
         $state.go(path);
@@ -8,14 +8,15 @@ angular.module('clockEnough')
 
     var user = JSON.parse(localStorage.getItem('User'));
 
-    if(angular.isDefined(user))
+    if(user != null)
     {
-        var user_id = user.person_id;
-        FaceAPI.getUserInfos(user_id);
+        $scope.user_id = user.person_id;
+        FaceAPI.getUserInfos($scope.user_id);
     }
     else{
         console.log(user);
     }
+    // FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
 
     $scope.$on('userInfos', function(event,data){
         $scope.events = data.group;
@@ -24,6 +25,24 @@ angular.module('clockEnough')
             ionicMaterialMotion.fadeSlideInRight();
             ionicMaterialInk.displayEffect();
         },100);
+    });
+
+}])
+
+.controller('AccountDetailsCtrl', ['$scope','$stateParams', 'FaceAPI', '$filter', function($scope, $stateParams, FaceAPI, $filter) {
+
+    FaceAPI.getEventInfos($stateParams.eventId);
+
+    $scope.$on('eventInfos', function(event,data){
+        var tag = data.tag.split('_');
+        $scope.group = {
+            'group_name' : data.group_name,
+            'date'  : $filter('date')(tag[0], "dd/MM/yyyy"),
+            'hours'  : $filter('date')(tag[1], "HH:mm:ss"),
+            'place' : tag[2],
+            'status' : tag[3],
+            'person' : data.person
+        };
     });
 
 }])
@@ -142,17 +161,16 @@ angular.module('clockEnough')
     // récupération de l'ID du user s'il est créé
     // association du visage au user
     $scope.$on('createUser', function(event,data){
-        var user_id = data.person_id;
-        console.log(data);
+        $scope.user_id = data.person_id;
         localStorage.setItem('User',JSON.stringify(data));
-        FaceAPI.addUserFace(user_id, $scope.user_face);
+        FaceAPI.addUserFace($scope.user_id, $scope.user_face);                
     });
 
     // confirmation de la souscription quand tout s'est bien passsé
     // retour à la page "account"
     $scope.$on('addUserFace', function(event,data){
         $scope.alertUser('Création du compte', 'Votre compte a bien été créé !');
-        $state.go('tab.account');
+        $state.go('tab.account', {}, {reload: true});
     });
 
     // notifications d'alerte

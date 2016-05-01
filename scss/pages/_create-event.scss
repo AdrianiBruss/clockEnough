@@ -3,4 +3,10 @@
 		max-height: 150px;
 		overflow: scroll;
 	}
+	.has-header .has-tabs-top{
+		top:70px;
+	}	
+}
+.item-input-wrapper input{
+	border-bottom:none;
 }

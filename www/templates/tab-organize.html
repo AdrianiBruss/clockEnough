@@ -2,9 +2,8 @@
   <ion-content>
     <div class="content header-logo">
         <div class="logo">
-            Logo
         </div>
-        <h1 class="h1 app-name">clockEnough</h1>
+        <h1 class="h1 app-name">Clock Enough</h1>
     </div>
     <div class="list">
         <h2 class="h2 title">Organiser un événement</h2>
@@ -12,10 +11,12 @@
             <input type="text" placeholder="Nom de l'événement" ng-model="event.name">
         </label>
         <label class="item item-input">
-            <input type="text" placeholder="Date" ng-model="event.date">
+            <span class="input-label">Date</span>
+            <input type="date" placeholder="Date" ng-model="event.date">
         </label>
         <label class="item item-input">
-            <input type="text" placeholder="Heure" ng-model="event.hours">
+            <span class="input-label">Heure</span>
+            <input type="time" placeholder="Heure" ng-model="event.hours">
         </label>
         <label class="item item-input">
             <input type="text" placeholder="Lieu" ng-model="event.place">
