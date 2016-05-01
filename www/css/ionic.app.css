@@ -9795,6 +9795,12 @@ input[type="text"] {
   color: #ef473a;
   border-color: #ef473a; }
 
+.item.item-avatar > img {
+  top: 12px;
+  max-width: 30px;
+  max-height: 30px;
+  border-radius: 0; }
+
 .animate-fade-slide-in-right .list .item {
   position: relative;
   width: 100%;
@@ -9812,11 +9818,12 @@ input[type="text"] {
     position: absolute;
     top: 50%;
     left: 50%;
-    max-width: 80%;
+    width: 90%;
     font-size: 26px;
     font-weight: 400;
     color: white;
     text-transform: uppercase;
+    white-space: normal;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
