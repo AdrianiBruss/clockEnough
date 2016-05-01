@@ -124,8 +124,6 @@ angular.module('clockEnough')
 	FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
 	// verification de l'appartenance de l'utilisateur au groupe en question
 	$scope.$on('userInfos', function(event, data){
-		console.log(data);
-		console.log('on user infos')
 		$ionicLoading.hide();
 		$scope.belongsTo = data.group.filter(function(group){
 			return group.group_id == $scope.group_id;
@@ -177,7 +175,6 @@ angular.module('clockEnough')
             'status' : tag[3].replace('status:','').replace(/:/gi,', '),
         };
 		$scope.event.status = $scope.event.status.split(', ');
-		console.log($scope.event.status);
 	})
 
 	$scope.addStatus = function(status){
