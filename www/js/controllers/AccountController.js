@@ -6,16 +6,18 @@ angular.module('clockEnough')
         $state.go(path);
     };
     
-    var user = JSON.parse(localStorage.getItem('User'));
+    // var user = JSON.parse(localStorage.getItem('User'));
 
-    if(user != null)
-    {
-        $scope.user_id = user.person_id;
-        FaceAPI.getUserInfos($scope.user_id);
-    }
-    else{
-        console.log(user);
-    }
+    // if(user != null)
+    // {
+    //     $scope.user_id = user.person_id;
+    //     FaceAPI.getUserInfos($scope.user_id);
+    // }
+    // else{
+    //     console.log(user);
+    // }
+
+    FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
 
     $scope.$on('userInfos', function(event,data){
         $scope.events = data.group;
