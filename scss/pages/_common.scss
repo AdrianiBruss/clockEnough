@@ -48,6 +48,7 @@ h2.h2.title {
 .tabs-top.tabs-striped .tab-item.tab-item-active, .tabs-top.tabs-striped .tab-item.active, .tabs-top.tabs-striped .tab-item.activated {
 	margin-top:3px;
 }
+
 .logo {
 
 	width:70px;
@@ -64,19 +65,14 @@ h2.h2.title {
 	background: url('http://ronald-site.pagesperso-orange.fr/image/face.png') no-repeat center center;
 	background-size:cover;
 }
+
 .picture {
-
 	display: block;
-
 	width: 200px;
 	height: 200px;
-
 	border: 1px solid $dark;
-
 	margin: 30px auto;
-
 	overflow: hidden;
-
 	i {
 		display: block;
 
@@ -85,16 +81,14 @@ h2.h2.title {
 		line-height: 150px;
 		font-size: 40px;
 	}
-
 	img {
 		width: 100%;
 	}
-
 }
+
 input[type="text"] {
 	border-bottom: 1px solid $dark;
 	&.ng-valid-parse {
-
 		color: $dark;
 		border-color: $dark;
 	}
@@ -105,6 +99,13 @@ input[type="text"] {
 		color: $assertive;
 		border-color: $assertive;
 	}
+}
+
+.item.item-avatar > img {
+    top: 12px;
+    max-width: 30px;
+    max-height: 30px;
+    border-radius: 0;
 }
 
 .animate-fade-slide-in-right{
@@ -135,18 +136,21 @@ input[type="text"] {
 				top:50%;
 				left:50%;
 
-				max-width: 80%;
+			    width:90%;
 
 				font-size: 26px;
 				font-weight: 400;
 				color: white;
 			    text-transform: uppercase;
+			    white-space: normal;
+
 
 				transform: translate(-50%,-50%);
 				-webkit-transform: translate(-50%,-50%);
 				-ms-transform: translate(-50%,-50%);
 				-moz-transform: translate(-50%,-50%);
 				-o-transform: translate(-50%,-50%);
+
 			}
 		}
 	}

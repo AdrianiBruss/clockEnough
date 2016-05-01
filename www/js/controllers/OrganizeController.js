@@ -1,6 +1,6 @@
 angular.module('clockEnough')
 
-.controller('OrganizeCtrl', function($scope, $state, FaceAPI, $ionicLoading, $ionicPopup) {
+.controller('OrganizeCtrl',['$scope', '$state', 'FaceAPI', '$ionicLoading', '$ionicPopup', '$filter', function($scope, $state, FaceAPI, $ionicLoading, $ionicPopup, $filter){
 
 	FaceAPI.getAllUsers();
 
@@ -12,11 +12,11 @@ angular.module('clockEnough')
 
 	$scope.peopleList = [];
 	$scope.event = {
-		name: "",
-		date: "",
-		hours: "",
-		place: "",
-		statusInput: "",
+		name: '',
+		date: new Date(),
+		hours: new Date(),
+		place: '',
+		statusInput: '',
 		status: [],
 		people: []
 	}
@@ -46,11 +46,14 @@ angular.module('clockEnough')
 
 		$ionicLoading.show();
 
+		var date = $filter('date')($scope.event.date, 'dd/MM/yyyy');
+		var hour = $filter('date')($scope.event.hours, 'HH:mm:ss');
+
 		//chaine de caractères contenant les infos de l'événement
-		$scope.tag = $scope.event.date+'_'+$scope.event.hours+'_'+$scope.event.place+'_'+$scope.event.status.join(':');
+		$scope.tag = date + '_' + hour + '_' + $scope.event.place + '_status:' + $scope.event.status.join(':');
 
 		//check des données
-		if ( $scope.event.name != "" && $scope.peopleList.length > 0 ) {
+		if ( $scope.event.name != '' && $scope.peopleList.length > 0 ) {
 
 			// Appel Api: creation de l'événement
 			FaceAPI.createEvent($scope.event.name, $scope.tag);
@@ -81,4 +84,4 @@ angular.module('clockEnough')
 
 	}
 
-});
+}]);
