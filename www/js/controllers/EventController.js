@@ -65,7 +65,7 @@ angular.module('clockEnough')
     $scope.sendPicture = function(){
         var options = new FileUploadOptions();
         var ft = new FileTransfer();
-        var serveur ="http://mailing.awakit-preprod.com/Renault/";
+        var serveur ="http://clockenough.adrien-brussolo.com/";
 
         if(angular.isDefined($scope.fileURI))
         {
