@@ -29,21 +29,15 @@ angular.module('clockEnough', ['ionic', 'ngCordova','ionic-material'])
 
 .config(function($stateProvider, $urlRouterProvider) {
 
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
   $stateProvider
-
-  // setup an abstract state for the tabs directive
+  // route en commun
   .state('tab', {
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html'
   })
 
-  // Each tab has its own nav history stack:
-
+  // Liste des événements existants
   .state('tab.event', {
     url: '/event',
     views: {
@@ -54,6 +48,7 @@ angular.module('clockEnough', ['ionic', 'ngCordova','ionic-material'])
     }
   })
 
+  // Détail d'un événement
   .state('tab.event-check', {
     url: '/event/:eventId',
     views: {
@@ -63,32 +58,25 @@ angular.module('clockEnough', ['ionic', 'ngCordova','ionic-material'])
       }
     }
   })
-  .state('tab.event-check-status', {
-    url: '/event/:eventId/check/:param',
+
+  // capture APN de l'utilisateur
+  .state('tab.event-capture', {
+    url: '/event/:eventId/capture/:check',
     views: {
       'tab-event': {
-        templateUrl: 'templates/tab-event-check-status.html',
-        controller: 'EventCheckStatusCtrl'
+        templateUrl: 'templates/tab-event-capture.html',
+        controller: 'EventCaptureCtrl'
+        }
       }
-    }
-  })
+    })
 
-  // .state('tab.event-capture', {
-  //   url: '/event/:eventId/capture/:check',
-  //   views: {
-  //     'tab-event': {
-  //       templateUrl: 'templates/tab-event-capture.html',
-  //       controller: 'EventCaptureCtrl'
-  //       }
-  //     }
-  //   })
-
-    .state('tab.event-capture', {
-      url: '/event/:eventId/capture',
+    // Attribution ou verification de l'utilisateur;
+    .state('tab.event-check-status', {
+      url: '/event/:eventId/check/:param/:faceId',
       views: {
         'tab-event': {
-          templateUrl: 'templates/tab-event-capture.html',
-          controller: 'EventCaptureCtrl'
+          templateUrl: 'templates/tab-event-check-status.html',
+          controller: 'EventCheckStatusCtrl'
         }
       }
     })

@@ -9776,7 +9776,8 @@ h2.h2.title {
   width: 200px;
   height: 200px;
   border: 1px solid #444;
-  margin: 30px auto; }
+  margin: 30px auto;
+  overflow: hidden; }
   .picture i {
     display: block;
     text-align: center;
@@ -9833,9 +9834,6 @@ input[type="text"] {
 .page-account .list .item .item-content {
   padding: 0;
   height: 200px; }
-
-.page-account .picture {
-  overflow: hidden; }
 
 #page-create-event .people-overflow {
   max-height: 150px;

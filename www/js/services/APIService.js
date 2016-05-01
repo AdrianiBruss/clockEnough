@@ -46,7 +46,7 @@ angular.module('clockEnough')
       callAjax('GET','https://apius.faceplusplus.com/v2/detection/detect?api_secret=' + API_SECRET + '&api_key=' + API_KEY + '&url=' + url,'detectFace');
     },
     getFace: function(idFace) {
-      callAjax('GET','https://apius.faceplusplus.com/v2/detection/detect?api_secret=' + API_SECRET + '&api_key=' + API_KEY + '&face_id=' + idFace,'detectFace');
+      callAjax('GET','https://apius.faceplusplus.com/v2/info/get_face?api_secret=' + API_SECRET + '&api_key=' + API_KEY + '&face_id=' + idFace,'getFace');
     }
 
   };
