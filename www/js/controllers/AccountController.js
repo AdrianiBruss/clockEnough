@@ -16,7 +16,7 @@ angular.module('clockEnough')
     else{
         console.log(user);
     }
-    // FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
+    FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
 
     $scope.$on('userInfos', function(event,data){
         $scope.events = data.group;
@@ -163,7 +163,7 @@ angular.module('clockEnough')
     $scope.$on('createUser', function(event,data){
         $scope.user_id = data.person_id;
         localStorage.setItem('User',JSON.stringify(data));
-        FaceAPI.addUserFace($scope.user_id, $scope.user_face);                
+        FaceAPI.addUserFace($scope.user_id, $scope.user_face);
     });
 
     // confirmation de la souscription quand tout s'est bien passsé

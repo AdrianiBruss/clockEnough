@@ -1,3 +1,14 @@
 .page-account {
-	
+	.list {
+		.item {
+			.item-content {
+				padding: 0;
+				height: 200px;
+			}
+		}
+	}
+
+	.picture {
+		overflow: hidden;
+	}
 }
