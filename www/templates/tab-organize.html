@@ -30,7 +30,7 @@
             </button>
         </div>
         <ion-list>
-            <ion-item ng-repeat="status in event.status">
+            <ion-item ng-repeat="status in event.status track by $index">
                 {{status}}
             </ion-item>
         </ion-list>

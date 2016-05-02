@@ -11,6 +11,7 @@ angular.module('clockEnough')
 
 	FaceAPI.getAllUsers();
 
+	// binding de tous les users afin d'en inviter à l'événement
 	$scope.$on('allUsers', function(event,data){
 		$scope.people = data.person;
     });
@@ -44,11 +45,14 @@ angular.module('clockEnough')
 
 	}
 
+	// attribution des statuts à l'event
 	$scope.addStatus = function(){
 		$scope.event.status.push($scope.event.statusInput);
 		$scope.event.statusInput = "";
 	}
 
+	// création de l'event
+	// ajout des users invités à l'event
 	$scope.saveEvent = function(){
 
 		$ionicLoading.show();
@@ -70,25 +74,27 @@ angular.module('clockEnough')
 		    });
 			$scope.$on('addUserInGroup', function(result, data) {
 				$ionicLoading.hide();
-				var alertPopup = $ionicPopup.alert({
-				    title: 'Nouvel événement',
-				    template: 'Votre événement a bien été créé !'
-			   });
-			   alertPopup.then(function(res) {
-			    	$state.go('tab.account');
-			   });
+
+				var alertPopup = $scope.alertUser('Nouvel événement','Votre événement a bien été créé !');
+				
+				$state.go('tab.account');
 			});
 
 		}else {
 
 			$ionicLoading.hide();
 
-			var alertPopup = $ionicPopup.alert({
-				title: 'Nouvel événement',
-				template: 'Veuillez nommer et ajouter au moins une personne à votre événement'
-			});
+			var alertPopup = $scope.alertUser('Nouvel événement','Veuillez nommer et ajouter au moins une personne à votre événement !');
 		}
 
 	}
+
+	// notifications d'alerte
+    $scope.alertUser = function(title,message){
+        $ionicPopup.alert({
+            title: title,
+            template: message
+        });
+    };
 
 }]);

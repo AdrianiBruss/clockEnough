@@ -1,9 +1,10 @@
 angular.module('clockEnough')
 
-.factory('UploadService', ['$rootScope', function ($rootScope) {
+.factory('UploadService', ['$rootScope', '$ionicPopup', function ($rootScope, $ionicPopup) {
 
   return {
 
+    // upload d'un fichier vers un serveur distant
     uploadImage: function(img){
 
       var options = new FileUploadOptions();
@@ -15,14 +16,16 @@ angular.module('clockEnough')
       options.mimeType = "image/jpg";
 
       // upload de la photo sur le serveur via le plugin File Transfer
-      // détection du visage via l'API grâce à l'URL de l'image retournée par le serveur
       ft.upload(img, encodeURI(serveur + "index.php"),
           function sucess(data){
               var imgUrl = serveur + data.response;
               $rootScope.$broadcast('uploadPicture', imgUrl);
           },
           function fail(error){
-              $scope.alertUser('Vérification de l\'utilisateur', 'Erreur lors de l\'upload de l\'image!');
+            $ionicPopup.alert({
+                title: 'Plugin File Transfer',
+                template: 'Erreur lors de l\'upload'
+            });
           },
           options
       );

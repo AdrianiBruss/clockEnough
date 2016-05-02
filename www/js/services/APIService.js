@@ -1,9 +1,12 @@
 angular.module('clockEnough')
 
-.factory('FaceAPI', ['$http','$rootScope','API_KEY','API_SECRET', '$ionicPopup', function ($http,$rootScope,API_KEY,API_SECRET,$ionicPopup) {
+.factory('FaceAPI', ['$http', '$rootScope', 'API_KEY','API_SECRET', '$ionicPopup', function ($http, $rootScope, API_KEY, API_SECRET, $ionicPopup) {
 
   return {
-    //////Events//////
+
+    // tous les calls à l'API Face plus plus
+
+    ////// Events //////
     getAllEvents: function() {
       callAjax('GET','https://apius.faceplusplus.com/v2/info/get_group_list?api_secret=' + API_SECRET + '&api_key=' + API_KEY + '','allEvents');
     },
@@ -16,7 +19,7 @@ angular.module('clockEnough')
     trainEvent: function(id) {
       callAjax('POST','https://apius.faceplusplus.com/v2/train/identify?api_secret=' + API_SECRET + '&api_key=' + API_KEY + '&group_id=' + id,'trainEvent');
     },
-    //////Users//////
+    ////// Users //////
     getAllUsers: function() {
       callAjax('GET','https://apius.faceplusplus.com/v2/info/get_person_list?api_secret=' + API_SECRET + '&api_key=' + API_KEY + '','allUsers');
     },
@@ -41,7 +44,7 @@ angular.module('clockEnough')
     recognizeUser: function(idUser,url) {
       callAjax('GET','https://apius.faceplusplus.com/v2/recognition/identify?api_secret=' + API_SECRET + '&api_key=' + API_KEY + '&group_id=' + idUser + '&url=' + url,'recognizeUser');
     },
-    /////Face/////
+    ///// Face /////
     detectFace: function(url) {
       callAjax('GET','https://apius.faceplusplus.com/v2/detection/detect?api_secret=' + API_SECRET + '&api_key=' + API_KEY + '&url=' + url,'detectFace');
     },
@@ -51,6 +54,7 @@ angular.module('clockEnough')
 
   };
 
+  // call Ajax avec un broadcast en cas de succès ou une alerte d'erreur
   function callAjax(method,url,event){
     $http({
       method: method,

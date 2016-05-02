@@ -17,6 +17,8 @@ angular.module('clockEnough')
 	};
 
 	FaceAPI.getAllEvents();
+
+	// affichage de tous les events de l'application
 	$scope.$on('allEvents', function(event,data){
 		$scope.events = data.group;
 
@@ -66,7 +68,8 @@ angular.module('clockEnough')
         PictureService.getPicture();
     };
 
-    //upload de l'image
+    // upload de l'image
+    // système d'alerte
     $scope.sendPicture = function(){
 
 
@@ -80,7 +83,7 @@ angular.module('clockEnough')
         }
     };
 
-    // reconnaissance faciale
+    // preview de l'image uploadée sur le serveur
     $scope.$on('getPicture', function(event,data){
         $scope.preview =  document.getElementById('capturedImage');
         $scope.preview.src = data;
@@ -88,9 +91,9 @@ angular.module('clockEnough')
         $scope.fileURI = data;
     });
 
+	// train du group ( nécessaire avant l'identification du user )
     $scope.$on('uploadPicture', function(event,data){
         $scope.imgUrl = data;
-        // train du group nécessaire avant l'identification du user
         FaceAPI.trainEvent($scope.group_id);
     });
 
@@ -99,13 +102,12 @@ angular.module('clockEnough')
         FaceAPI.recognizeUser($scope.group_id, $scope.imgUrl);
     });
 
-    //popup d'alerte résultat
+    //popup d'alerte résultat de la reconnaissance faciale
     $scope.$on('recognizeUser', function(event,data){
 		$scope.face = data.face[0];
-		$scope.candidate = $scope.face.candidate[0];
 
        if(angular.isDefined($scope.face) ){
-		   if ( $scope.candidate.confidence > 35 ) {
+		   if ( $scope.face.candidate[0].confidence > 35 ) {
     		   FaceAPI.getUserInfos($scope.candidate.person_id);
 		   }else {
 			   $ionicLoading.hide();
@@ -118,8 +120,7 @@ angular.module('clockEnough')
         }
     });
 
-	// FaceAPI.getUserInfos('59454b2703b2359f18e00927d23f5f25');
-	// verification de l'appartenance de l'utilisateur au groupe en question
+	// verification de l'appartenance de l'utilisateur au groupe
 	$scope.$on('userInfos', function(event, data){
 		$ionicLoading.hide();
 		$scope.belongsTo = data.group.filter(function(group){
@@ -132,7 +133,6 @@ angular.module('clockEnough')
 					'eventId': $scope.group_id,
 					'param': $scope.page_param,
 					'faceId' : data.face[0].face_id
-					// 'faceId' : "1249cfb4b412704f350cc0f7fa85afd4"
 				}
 			)
 		} else {
@@ -149,7 +149,7 @@ angular.module('clockEnough')
 
 }])
 
-// tab.event-check-status ( possibilité d'attribuer ou verifier un status )
+// tab.event-check-status ( possibilité d'attribuer ou vérifier un status )
 .controller('EventCheckStatusCtrl', [
 	'FaceAPI',
 	'$scope',
@@ -167,6 +167,7 @@ angular.module('clockEnough')
 		$scope.userInfos = false;
 	}
 
+	// binding des infos du user
 	$scope.$on('getFace', function(event, data){
 		$scope.name = data.face_info[0].person[0].person_name.replace('_',' ');
 		$scope.person_id = data.face_info[0].person[0].person_id;
@@ -175,7 +176,7 @@ angular.module('clockEnough')
 
 	})
 
-	// status de l'événement
+	// get status de l'événement
 	$scope.$on('eventInfos', function(event, data){
 		var tag = data.tag.split('_');
         $scope.event = {
@@ -185,6 +186,7 @@ angular.module('clockEnough')
 		$scope.event.status = $scope.event.status.split(', ');
 	})
 
+	// attribution de statuts au user
 	$scope.addStatus = function(status){
 
 		$ionicLoading.show();
@@ -194,6 +196,7 @@ angular.module('clockEnough')
 
 	};
 
+	// redirection vers la page "Check" suite à l'update du user
 	$scope.$on('updateUser', function(event, data){
 		$ionicLoading.hide();
 		$state.go('tab.event-check', {'eventId': $stateParams.eventId})
