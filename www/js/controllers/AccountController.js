@@ -10,9 +10,13 @@ angular.module('clockEnough')
     function($scope, ionicMaterialInk, ionicMaterialMotion, $state, FaceAPI, $ionicLoading) {
 
     $ionicLoading.show();
+
     $scope.goTo = function ( path ) {
         $state.go(path);
     };
+
+    // Check de la présence ou non du user dans le localStorage
+    // S'il existe, on affiche les events auxquels il est invité.
 
     var user = JSON.parse(localStorage.getItem('User'));
 
@@ -24,7 +28,6 @@ angular.module('clockEnough')
         $ionicLoading.hide();
     }
 
-    // FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
 
     $scope.$on('userInfos', function(event,data){
         $scope.events = data.group;
@@ -44,6 +47,8 @@ angular.module('clockEnough')
     'FaceAPI',
     '$filter',
     function($scope, $stateParams, FaceAPI, $filter) {
+
+    // Récupération de l'événement choisi et binding de ses informations.
 
     FaceAPI.getEventInfos($stateParams.eventId);
 
@@ -71,7 +76,7 @@ angular.module('clockEnough')
     '$ionicPopup',
     '$state',
     '$ionicLoading',
-    function($scope, $cordovaCamera,FaceAPI,PictureService,UploadService,$rootScope,$ionicPopup,$state, $ionicLoading){
+    function($scope, $cordovaCamera, FaceAPI, PictureService, UploadService, $rootScope, $ionicPopup, $state, $ionicLoading){
 
     $scope.icon = true;
 
@@ -87,6 +92,8 @@ angular.module('clockEnough')
         PictureService.getPicture();
     };
 
+    // création du compte user
+    // vérification du formulaire + système d'alerte
     $scope.saveAccount = function(){
 
         $ionicLoading.show();
@@ -128,7 +135,7 @@ angular.module('clockEnough')
         }
     };
 
-    // reconnaissance faciale
+    // preview de l'image prise avec l'APN 
     $scope.$on('getPicture', function(event,data){
         $scope.preview =  document.getElementById('capturedImage');
         $scope.preview.src = data;
@@ -136,7 +143,7 @@ angular.module('clockEnough')
         $scope.fileURI = data;
     });
 
-    // reconnaissance faciale
+    // détection d'un visage sur la photo uploadée sur le serveur
     $scope.$on('uploadPicture', function(event,imgUrl){
         FaceAPI.detectFace(imgUrl);    
     });
