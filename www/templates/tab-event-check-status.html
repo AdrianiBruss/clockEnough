@@ -12,11 +12,11 @@
         <div class="userInfos">
             <h2 class="h2 title">{{name}}</h2>
         </div>
-        <div ng-if="userInfos">
+        <div ng-if="!userInfos">
             <h2 class="h2 title tags">Ajouter un statut</h2>
             <button  ng-repeat="e in event.status" class="button button-large button-block button-stable" ng-click="addStatus(e)">{{e}}</button>
-        </div>          
-        <div ng-if="!userInfos">
+        </div>
+        <div ng-if="userInfos">
             <h2 class="h2 title tags">Statut(s) :</h2>
             <p class="statut">{{tags}}</p>
         </div>

@@ -1,17 +1,27 @@
 angular.module('clockEnough')
 
-.controller('AccountCtrl', ['$scope', 'ionicMaterialInk', 'ionicMaterialMotion', '$state', 'FaceAPI', function($scope, ionicMaterialInk, ionicMaterialMotion, $state, FaceAPI) {
+.controller('AccountCtrl', [
+    '$scope',
+    'ionicMaterialInk',
+    'ionicMaterialMotion',
+    '$state',
+    'FaceAPI',
+    '$ionicLoading',
+    function($scope, ionicMaterialInk, ionicMaterialMotion, $state, FaceAPI, $ionicLoading) {
 
+    $ionicLoading.show();
     $scope.goTo = function ( path ) {
         $state.go(path);
     };
-    
+
     var user = JSON.parse(localStorage.getItem('User'));
 
     if(user != null)
     {
         $scope.user_id = user.person_id;
         FaceAPI.getUserInfos($scope.user_id);
+    }else {
+        $ionicLoading.hide();
     }
 
     // FaceAPI.getUserInfos('6a6eb09dc05c64a29b668293efac74f1');
@@ -22,12 +32,18 @@ angular.module('clockEnough')
             // ionic materialize animations
             ionicMaterialMotion.fadeSlideInRight();
             ionicMaterialInk.displayEffect();
+            $ionicLoading.hide();
         },100);
     });
 
 }])
 
-.controller('AccountDetailsCtrl', ['$scope','$stateParams', 'FaceAPI', '$filter', function($scope, $stateParams, FaceAPI, $filter) {
+.controller('AccountDetailsCtrl', [
+    '$scope',
+    '$stateParams',
+    'FaceAPI',
+    '$filter',
+    function($scope, $stateParams, FaceAPI, $filter) {
 
     FaceAPI.getEventInfos($stateParams.eventId);
 
@@ -45,7 +61,15 @@ angular.module('clockEnough')
 
 }])
 
-.controller('SignUpCtrl', ['$scope', 'PictureService', 'FaceAPI', 'UploadService','$rootScope', '$ionicPopup', '$state', function($scope, PictureService, FaceAPI, UploadService, $rootScope, $ionicPopup, $state){
+.controller('SignUpCtrl', [
+    '$scope',
+    '$cordovaCamera',
+    'FaceAPI',
+    '$rootScope',
+    '$ionicPopup',
+    '$state',
+    '$ionicLoading',
+    function($scope, $cordovaCamera,FaceAPI,$rootScope,$ionicPopup,$state, $ionicLoading){
 
     $scope.icon = true;
 
@@ -63,11 +87,14 @@ angular.module('clockEnough')
 
     $scope.saveAccount = function(){
 
+        $ionicLoading.show();
+
         if(angular.isDefined($scope.fileURI))
         {
 
             if($scope.account.firstname !== '' && $scope.account.lastname !== '')
             {
+                $ionicLoading.hide();
                 $ionicPopup.confirm({
                     title: 'Création du compte',
                     template: 'Confirmez votre choix',
@@ -79,6 +106,7 @@ angular.module('clockEnough')
                       onTap: function(e)
                         {
                             UploadService.uploadImage($scope.fileURI);
+							$ionicLoading.show();
                         }
                      }
                     ]
@@ -87,11 +115,13 @@ angular.module('clockEnough')
             }
             else
             {
+                $ionicLoading.hide();
                 $scope.alertUser('Création du compte', 'Veuillez remplir tous les champs !');
             }
         }
         else
         {
+            $ionicLoading.hide();
             $scope.alertUser('Création du compte', 'Veuillez prendre une photo !');
         }
     };
@@ -124,6 +154,8 @@ angular.module('clockEnough')
             $scope.preview.src = "";
         }
         else{
+
+            $ionicLoading.hide();
             $scope.alertUser('Création du compte', 'Aucun visage n\'a été détecté, essayez à nouveau !');
         }
     });
@@ -139,6 +171,7 @@ angular.module('clockEnough')
     // confirmation de la souscription quand tout s'est bien passsé
     // retour à la page "account"
     $scope.$on('addUserFace', function(event,data){
+        $ionicLoading.hide();
         $scope.alertUser('Création du compte', 'Votre compte a bien été créé !');
         $state.go('tab.account', {}, {reload: true});
     });
