@@ -104,8 +104,8 @@ angular.module('clockEnough')
 		$scope.face = data.face[0];
 		$scope.candidate = $scope.face.candidate[0];
 
-       if(angular.isDefined($scope.candidate) ){
-		   if ( $scope.candidate.candidate[0].confidence > 35 ) {
+       if(angular.isDefined($scope.face) ){
+		   if ( $scope.candidate.confidence > 35 ) {
     		   FaceAPI.getUserInfos($scope.candidate.person_id);
 		   }else {
 			   $ionicLoading.hide();
