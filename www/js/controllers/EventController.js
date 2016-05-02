@@ -28,67 +28,23 @@ angular.module('clockEnough')
 })
 
 // tab.event-capture ( prise en photo de l'utilisateur )
-.controller('EventCaptureCtrl', ['$scope', '$cordovaCamera', 'FaceAPI', '$rootScope', '$ionicPopup', '$state','$stateParams', '$ionicLoading', function($scope, $cordovaCamera,FaceAPI,$rootScope,$ionicPopup,$state, $stateParams, $ionicLoading){
+.controller('EventCaptureCtrl', ['$scope','PictureService','FaceAPI', 'UploadService', '$rootScope', '$ionicPopup', '$state','$stateParams', '$ionicLoading', function($scope, PictureService,FaceAPI, UploadService, $rootScope,$ionicPopup,$state, $stateParams, $ionicLoading){
 
     $scope.icon = true;
     $scope.group_id = $stateParams.eventId;
 	$scope.page_param = $stateParams.check;
 
     $scope.capturePicture = function() {
-
-        // options pour la capture photo
-        var options = {
-            quality: 100,
-            destinationType: Camera.DestinationType.FILE_URI,
-            sourceType: Camera.PictureSourceType.CAMERA,
-            allowEdit: false,
-            encodingType: Camera.EncodingType.JPEG,
-            targetWidth: 200,
-            targetHeight: 200,
-            popoverOptions: CameraPopoverOptions,
-            saveToPhotoAlbum: false,
-            correctOrientation:true
-        };
-
-        // preview de la photo quand la capture est effectuée
-        $cordovaCamera.getPicture(options).then(function(imageData) {
-            $scope.preview = document.getElementById('capturedImage');
-            $scope.preview.src = imageData;
-            $scope.icon = false;
-            $scope.fileURI = imageData;
-        }, function(err) {
-            console.error(err)
-        });
+        PictureService.getPicture();
     };
 
     //upload de l'image
     $scope.sendPicture = function(){
-        var options = new FileUploadOptions();
-        var ft = new FileTransfer();
-        var serveur ="http://clockenough.adrien-brussolo.com/";
+
 
         if(angular.isDefined($scope.fileURI))
         {
-
-			$ionicLoading.show();
-
-			options.fileKey = "uploaded_file";
-            options.fileName = String($scope.fileURI).substr(String($scope.fileURI).lastIndexOf('/') + 1);
-            options.mimeType = "image/jpg";
-
-            ft.upload($scope.fileURI, encodeURI(serveur + "index.php"),
-                function sucess(data){
-
-                    $scope.imgUrl = serveur + data.response;
-
-                    // train du group nécessaire avant l'identification du user
-                    FaceAPI.trainEvent($scope.group_id);
-                },
-                function fail(error){
-                    $scope.alertUser('Vérification de l\'utilisateur', 'Erreur lors de l\'upload de l\'image!');
-                },
-                options
-            );
+            UploadService.uploadImage($scope.fileURI);
         }
         else
         {
@@ -97,18 +53,31 @@ angular.module('clockEnough')
     };
 
     // reconnaissance faciale
+    $scope.$on('getPicture', function(event,data){
+        $scope.preview =  document.getElementById('capturedImage');
+        $scope.preview.src = data;
+        $scope.icon = false;
+        $scope.fileURI = data;
+    });
+
+    $scope.$on('uploadPicture', function(event,data){
+        // train du group nécessaire avant l'identification du user
+        FaceAPI.trainEvent($scope.group_id);
+    });
+
+    // reconnaissance faciale
     $scope.$on('trainEvent', function(event,data){
         FaceAPI.recognizeUser($scope.group_id, $scope.imgUrl);
     });
 
     //popup d'alerte résultat
     $scope.$on('recognizeUser', function(event,data){
-		$scope.candidate = data.face[0].candidate[0];
+		$scope.candidate = data.face[0];
 		console.log($scope.candidate);
 
        if(angular.isDefined($scope.candidate) ){
 		   console.log('--confidence', $scope.candidate.confidence)
-		   if ( $scope.candidate.confidence > 35 ) {
+		   if ( $scope.candidate.candidate[0].confidence > 35 ) {
     		   FaceAPI.getUserInfos($scope.candidate.person_id);
 		   }else {
 			   $ionicLoading.hide();

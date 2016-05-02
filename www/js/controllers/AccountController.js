@@ -45,7 +45,7 @@ angular.module('clockEnough')
 
 }])
 
-.controller('SignUpCtrl', ['$scope', '$cordovaCamera', 'FaceAPI', '$rootScope', '$ionicPopup', '$state', function($scope, $cordovaCamera,FaceAPI,$rootScope,$ionicPopup,$state){
+.controller('SignUpCtrl', ['$scope', 'PictureService', 'FaceAPI', 'UploadService','$rootScope', '$ionicPopup', '$state', function($scope, PictureService, FaceAPI, UploadService, $rootScope, $ionicPopup, $state){
 
     $scope.icon = true;
 
@@ -58,45 +58,15 @@ angular.module('clockEnough')
     $scope.user_id = null;
 
     $scope.capturePicture = function() {
-
-        // options pour la capture photo
-        var options = {
-            quality: 100,
-            destinationType: Camera.DestinationType.FILE_URI,
-            sourceType: Camera.PictureSourceType.CAMERA,
-            allowEdit: false,
-            encodingType: Camera.EncodingType.JPEG,
-            targetWidth: 200,
-            targetHeight: 200,
-            popoverOptions: CameraPopoverOptions,
-            saveToPhotoAlbum: false,
-            correctOrientation:true
-        };
-
-        // preview de la photo quand la capture est effectuée
-        $cordovaCamera.getPicture(options).then(function(imageData) {
-            $scope.preview = document.getElementById('capturedImage');
-            $scope.preview.src = imageData;
-            $scope.icon = false;
-            $scope.fileURI = imageData;
-        }, function(err) {
-            console.error(err)
-        });
+        PictureService.getPicture();
     };
 
     $scope.saveAccount = function(){
-        $scope.infos = $scope.account;
-        var options = new FileUploadOptions();
-        var ft = new FileTransfer();
-        var serveur ="http://clockenough.adrien-brussolo.com/";
 
         if(angular.isDefined($scope.fileURI))
         {
-            options.fileKey = "uploaded_file";
-            options.fileName = String($scope.fileURI).substr(String($scope.fileURI).lastIndexOf('/') + 1);
-            options.mimeType = "image/jpg";
 
-            if($scope.infos.firstname!== '' && $scope.infos.lastname!== '')
+            if($scope.account.firstname !== '' && $scope.account.lastname !== '')
             {
                 $ionicPopup.confirm({
                     title: 'Création du compte',
@@ -108,18 +78,7 @@ angular.module('clockEnough')
                       type: 'button-positive',
                       onTap: function(e)
                         {
-                            // upload de la photo sur le serveur via le plugin File Transfer
-                            // détection du visage via l'API grâce à l'URL de l'image retournée par le serveur
-                            ft.upload($scope.fileURI, encodeURI(serveur + "index.php"),
-                                function sucess(data){
-                                    var imgUrl = serveur + data.response;
-                                    FaceAPI.detectFace(imgUrl);
-                                },
-                                function fail(error){
-                                    $scope.alertUser('Création du compte', 'Erreur lors de l\'upload de l\'image!');
-                                },
-                                options
-                            );
+                            UploadService.uploadImage($scope.fileURI);
                         }
                      }
                     ]
@@ -137,12 +96,25 @@ angular.module('clockEnough')
         }
     };
 
+    // reconnaissance faciale
+    $scope.$on('getPicture', function(event,data){
+        $scope.preview =  document.getElementById('capturedImage');
+        $scope.preview.src = data;
+        $scope.icon = false;
+        $scope.fileURI = data;
+    });
+
+    // reconnaissance faciale
+    $scope.$on('uploadPicture', function(event,imgUrl){
+        FaceAPI.detectFace(imgUrl);    
+    });
+
     // création du user dans la base de données si un visage est détecté
     // remise à zéro du formulaire
     $scope.$on('detectFace', function(event,data){
         if(angular.isDefined(data.face[0])){
             $scope.user_face = data.face[0].face_id;
-            FaceAPI.createUser($scope.infos.firstname,$scope.infos.lastname);
+            FaceAPI.createUser($scope.account.firstname,$scope.account.lastname);
             //
             $scope.account = {
                 firstname : "",
