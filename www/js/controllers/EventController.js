@@ -89,6 +89,7 @@ angular.module('clockEnough')
     });
 
     $scope.$on('uploadPicture', function(event,data){
+        $scope.imgUrl = data;
         // train du group nécessaire avant l'identification du user
         FaceAPI.trainEvent($scope.group_id);
     });
