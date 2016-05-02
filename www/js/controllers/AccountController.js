@@ -65,11 +65,13 @@ angular.module('clockEnough')
     '$scope',
     '$cordovaCamera',
     'FaceAPI',
+    'PictureService',
+    'UploadService',
     '$rootScope',
     '$ionicPopup',
     '$state',
     '$ionicLoading',
-    function($scope, $cordovaCamera,FaceAPI,$rootScope,$ionicPopup,$state, $ionicLoading){
+    function($scope, $cordovaCamera,FaceAPI,PictureService,UploadService,$rootScope,$ionicPopup,$state, $ionicLoading){
 
     $scope.icon = true;
 

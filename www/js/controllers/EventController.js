@@ -49,12 +49,14 @@ angular.module('clockEnough')
 	'$scope',
 	'$cordovaCamera',
 	'FaceAPI',
+    'PictureService',
+    'UploadService',
 	'$rootScope',
 	'$ionicPopup',
 	'$state',
 	'$stateParams',
 	'$ionicLoading',
-	function($scope, $cordovaCamera,FaceAPI,$rootScope,$ionicPopup,$state, $stateParams, $ionicLoading){
+	function($scope,$cordovaCamera,FaceAPI,PictureService,UploadService,$rootScope,$ionicPopup,$state, $stateParams, $ionicLoading){
 
     $scope.icon = true;
     $scope.group_id = $stateParams.eventId;
