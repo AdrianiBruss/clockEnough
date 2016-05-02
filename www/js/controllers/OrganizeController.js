@@ -77,9 +77,7 @@ angular.module('clockEnough')
 
 				var alertPopup = $scope.alertUser('Nouvel événement','Votre événement a bien été créé !');
 				
-				alertPopup.then(function(res) {
-					$state.go('tab.account');
-				});
+				$state.go('tab.account');
 			});
 
 		}else {

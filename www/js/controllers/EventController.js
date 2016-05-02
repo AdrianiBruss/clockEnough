@@ -105,10 +105,9 @@ angular.module('clockEnough')
     //popup d'alerte résultat de la reconnaissance faciale
     $scope.$on('recognizeUser', function(event,data){
 		$scope.face = data.face[0];
-		$scope.candidate = $scope.face.candidate[0];
 
        if(angular.isDefined($scope.face) ){
-		   if ( $scope.candidate.confidence > 35 ) {
+		   if ( $scope.face.candidate[0].confidence > 35 ) {
     		   FaceAPI.getUserInfos($scope.candidate.person_id);
 		   }else {
 			   $ionicLoading.hide();
