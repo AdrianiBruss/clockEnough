@@ -72,6 +72,7 @@ angular.module('clockEnough')
     // système d'alerte
     $scope.sendPicture = function(){
 
+		$ionicLoading.show();
 
         if(angular.isDefined($scope.fileURI))
         {
@@ -107,7 +108,8 @@ angular.module('clockEnough')
 		$scope.face = data.face[0];
 
        if(angular.isDefined($scope.face) ){
-		   if ( $scope.face.candidate[0].confidence > 35 ) {
+		   $scope.candidate = $scope.face.candidate[0];
+		   if ( $scope.candidate.confidence > 35 ) {
     		   FaceAPI.getUserInfos($scope.candidate.person_id);
 		   }else {
 			   $ionicLoading.hide();
